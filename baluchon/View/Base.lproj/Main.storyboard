@@ -11,7 +11,6 @@
         <!--Tab Bar Controller-->
         <scene sceneID="T9I-Av-85A">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DWe-IY-sNV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tabBarController id="uKA-Dd-TRu" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="mRi-qe-gZ7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
@@ -24,6 +23,7 @@
                         <segue destination="zQ9-Sf-wje" kind="relationship" relationship="viewControllers" id="j9L-gW-Ssh"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DWe-IY-sNV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-974" y="-222"/>
         </scene>
@@ -44,10 +44,10 @@
             </objects>
             <point key="canvasLocation" x="-1865" y="496"/>
         </scene>
-        <!--View Controller-->
+        <!--Exchange View Controller-->
         <scene sceneID="7qU-Rz-6be">
             <objects>
-                <viewController id="thb-nO-gpw" customClass="ViewController" customModule="baluchon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="thb-nO-gpw" customClass="ExchangeViewController" customModule="baluchon" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Y8w-yv-Dhw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -57,17 +57,14 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <action selector="didTapDollarExchangeField" destination="thb-nO-gpw" eventType="valueChanged" id="CQs-Xh-N5b"/>
-                                </connections>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ahZ-8C-hcZ">
                                 <rect key="frame" x="159" y="352" width="97" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                 <connections>
-                                    <action selector="didTapEuroExchangeField" destination="thb-nO-gpw" eventType="valueChanged" id="jXg-Mf-y11"/>
+                                    <action selector="didTapExchangeField:" destination="thb-nO-gpw" eventType="editingChanged" id="Rwb-ub-1yh"/>
                                 </connections>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Euro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qCA-8W-GKw">
@@ -89,6 +86,10 @@
                         <color key="backgroundColor" systemColor="systemBrownColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="ivd-3P-tLQ"/>
+                    <connections>
+                        <outlet property="dollarLabel" destination="Ihw-Hq-Bci" id="Mpi-3Y-H1c"/>
+                        <outlet property="euroLabel" destination="ahZ-8C-hcZ" id="vYP-lB-MCG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JXM-9i-DyU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -128,10 +129,10 @@
             </objects>
             <point key="canvasLocation" x="-975" y="496"/>
         </scene>
-        <!--View Controller-->
+        <!--Weather View Controller-->
         <scene sceneID="wRj-CE-jMT">
             <objects>
-                <viewController id="Egd-ZF-zN6" sceneMemberID="viewController">
+                <viewController id="Egd-ZF-zN6" customClass="WeatherViewController" customModule="baluchon" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gpw-nw-D3J">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -144,10 +145,10 @@
             </objects>
             <point key="canvasLocation" x="-88" y="1256"/>
         </scene>
-        <!--View Controller-->
+        <!--Translate View Controller-->
         <scene sceneID="j1G-pQ-85D">
             <objects>
-                <viewController id="4Mg-jP-t82" customClass="ViewController" customModule="baluchon" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="4Mg-jP-t82" customClass="TranslateViewController" customModule="baluchon" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lYF-4O-cf7">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -184,6 +185,18 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYD-uL-uT6">
+                                <rect key="frame" x="83" y="402" width="76" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Inverser"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hn1-5Z-4ZD">
+                                <rect key="frame" x="169" y="668" width="78" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Traduire"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="srn-8N-9uQ"/>
                         <color key="backgroundColor" red="0.71764705880000002" green="0.3799999952" blue="0.3799999952" alpha="1" colorSpace="calibratedRGB"/>
