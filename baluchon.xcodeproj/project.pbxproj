@@ -38,6 +38,7 @@
 		D552907928A3EC9600AAA663 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		D552907B28A3ECA600AAA663 /* ExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRate.swift; sourceTree = "<group>"; };
 		D552907D28A3ECC300AAA663 /* Translate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translate.swift; sourceTree = "<group>"; };
+		D59A749D28BF56A1004F9F8E /* ApiKeyExchangeRate.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ApiKeyExchangeRate.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +55,7 @@
 		D552905528A3E59E00AAA663 = {
 			isa = PBXGroup;
 			children = (
+				D59A749D28BF56A1004F9F8E /* ApiKeyExchangeRate.xcconfig */,
 				D552906028A3E59E00AAA663 /* baluchon */,
 				D552905F28A3E59E00AAA663 /* Products */,
 			);
@@ -231,6 +233,7 @@
 /* Begin XCBuildConfiguration section */
 		D552907028A3E5A100AAA663 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D59A749D28BF56A1004F9F8E /* ApiKeyExchangeRate.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -291,6 +294,7 @@
 		};
 		D552907128A3E5A100AAA663 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D59A749D28BF56A1004F9F8E /* ApiKeyExchangeRate.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

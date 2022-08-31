@@ -21,14 +21,12 @@ class ExchangeRate {
                     print(rateData)
                     self.exchangeRateData.append(rateData)
                     print("TEST", self.exchangeRateData[0].result ?? 0)
-//                    print(self.exchangeRateData)
                 }
             }
         }
-//        print(exchangeRateData[0].result ?? "0")
     }
     
 }
 
 
-//  UTILISER LES CALLBACK 
+

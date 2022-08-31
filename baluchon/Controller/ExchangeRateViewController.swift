@@ -25,7 +25,7 @@ class ExchangeViewController: UIViewController {
         let from: String
         let amount: Float
         let to: String
-//        print(sender.text)
+
         if sender == self.euroLabel {
             from = "EUR"
             let senderText = sender.text
