@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ExchangeRateDelegate: AnyObject {
+    func updateScreen(result: String)
+}
+
 class ExchangeViewController: UIViewController {
     
     @IBOutlet weak var euroLabel: UITextField! {
@@ -45,16 +49,18 @@ class ExchangeViewController: UIViewController {
     
 }
 
-extension ExchangeViewController: UITextFieldDelegate {
+extension ExchangeViewController: ExchangeRateDelegate, UITextFieldDelegate {
+    
+    func updateScreen(result: String) { }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
 
         guard let oldText = textField.text, let r = Range(range, in: oldText) else { return false }
         let newText = oldText.replacingCharacters(in: r, with: string)
-        guard let value = Double(newText.replacingOccurrences(of: ",", with: ".")) else { return false }
+//        guard let value = Double(newText.replacingOccurrences(of: ",", with: ".")) else { return false }
         return true
     }
 
 }
 
-//^(100|[1-9][0-9]?(,[0-9][0-9]))$
+

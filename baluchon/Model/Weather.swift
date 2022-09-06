@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+class WeatherModel {
+    
+//    let newWeatherController = WeatherViewController()
+//    
+//    func modifierLabel(){
+//        newWeatherController.NYLabel.text = "TEST"
+//    }
+}

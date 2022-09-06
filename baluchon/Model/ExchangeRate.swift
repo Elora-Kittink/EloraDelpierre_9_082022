@@ -22,6 +22,7 @@ class ExchangeRate {
                     self.exchangeRateData.append(rateData)
                     print("TEST", self.exchangeRateData[0].result ?? 0)
                 }
+                
             }
         }
     }

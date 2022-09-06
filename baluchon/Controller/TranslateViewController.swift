@@ -7,23 +7,32 @@
 
 import UIKit
 
+protocol TranslateDelegate: AnyObject {
+    
+    func updateScreen(result: String)
+}
+
 class TranslateViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
-    
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        TranslationService.shared.getTranslation(for: "hello",
+                                                 from: "en",
+                                                 to: "fr") { results in
+            print("😀")
+            print(results)
+        }
     }
-    */
-
 }
+
+//extension TranslateViewController: TranslateDelegate {
+//
+//    func updateScreen(result: String) {
+//        <#code#>
+//    }
+//}
