@@ -11,9 +11,11 @@ import Foundation
 
 class ExchangeRateService {
     
+
+    
     func fetchExchangeRate(amount: Float, from: String, to: String, dataFetched: @escaping (ExchangeRateStruct?) -> Void) {
 
-        let apiKey = Bundle.main.object(forInfoDictionaryKey: "ExchangeRateAPIKEY") as? String
+        let apiKey = Bundle.main.object(forInfoDictionaryKey: "Exchange_Rate_API_KEY") as? String
         
         guard let key = apiKey, !key.isEmpty else {
             print("API key does not exist")

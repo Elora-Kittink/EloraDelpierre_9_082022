@@ -8,7 +8,7 @@
 import Foundation
 
 
-struct MeteoResponse: Decodable {
+struct WeatherStruct: Decodable {
     
     struct Weather: Decodable {
         

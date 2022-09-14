@@ -7,25 +7,20 @@
 
 import Foundation
 
-//TUTO   https://www.appcoda.com/google-translation-api/
-
-//Méthode HTTP et URL :
-//
-//POST https://translation.googleapis.com/language/translate/v2
-// DOC https://cloud.google.com/translate/docs/basic/translate-text-basic?hl=fr#translate_translate_text-drest
-
 class TranslationService {
     
     static let shared = TranslationService()
     
-    private let apiKey = "AIzaSyBvSyMDb8OQO5su-AImC2WzclGPsyNKKYI"
+    let apiKey = Bundle.main.object(forInfoDictionaryKey: "Translate_API_KEY") as? String
     
     private let apiUrl = "https://translation.googleapis.com/language/translate/v2"
+    
+    
     
     func getTranslation(for queryText: String,
                         from source: String,
                         to target: String,
-                        dataFetched: @escaping (_ results: String?) -> Void) {
+                        dataFetched: @escaping (_ results: String) -> Void) {
         let urlParams: [String: String] = [
             "q": queryText,
             "source": source,
@@ -33,7 +28,7 @@ class TranslationService {
             "format": "text"
         ]
         
-        let url = URL(string: self.apiUrl + "?key=" + self.apiKey)!
+        let url = URL(string: self.apiUrl + "?key=" + (self.apiKey ?? ""))!
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
@@ -54,7 +49,7 @@ class TranslationService {
             }
             
             let responseJSON = try? JSONDecoder().decode(TranslateResponse.self, from: data)
-            dataFetched(responseJSON?.data.translations.first?.translatedText)
+            dataFetched(responseJSON?.data.translations.first?.translatedText ?? "FAIL")
         }
         
         task.resume()
