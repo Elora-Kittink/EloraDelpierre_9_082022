@@ -15,7 +15,20 @@ class TranslationService {
     
     private let apiUrl = "https://translation.googleapis.com/language/translate/v2"
     
-    
+    func getTranslation(for queryText: String, from source: String, to target: String) async -> TranslateStruct? {
+        let translateUrl = URL(string: apiUrl)!
+        
+        do {
+            let (data, response) = try await URLSession.shared.data(from: translateUrl)
+            let _data = try JSONDecoder().decode(TranslateStruct.self, from: data)
+            print(data)
+            return _data
+        } catch {
+            print(error)
+            return nil
+        }
+        
+    }
     
     func getTranslation(for queryText: String,
                         from source: String,
@@ -48,7 +61,7 @@ class TranslationService {
                 return
             }
             
-            let responseJSON = try? JSONDecoder().decode(TranslateResponse.self, from: data)
+            let responseJSON = try? JSONDecoder().decode(TranslateStruct.self, from: data)
             dataFetched(responseJSON?.data.translations.first?.translatedText ?? "FAIL")
         }
         
