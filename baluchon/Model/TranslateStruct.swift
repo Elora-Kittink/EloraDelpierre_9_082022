@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TranslateResponse: Decodable {
+struct TranslateStruct: Decodable {
     
     struct Translation: Decodable {
         
