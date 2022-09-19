@@ -11,7 +11,6 @@ import Foundation
 
 class WeatherService {
     
-    static let shared = WeatherService()
     private var weatherApiKey: String
     
         var weatherDataArray: [WeatherStruct] = []
@@ -25,6 +24,7 @@ class WeatherService {
         self.weatherApiKey = (Bundle.main.object(forInfoDictionaryKey: "Weather_API_KEY") as? String) ?? ""
     }
     
+    @available(iOS 15, *)
     func fetchDataAwait(forCity: String) async -> WeatherStruct? {
         let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
         let meteoUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(self.weatherApiKey)&units=metric&q=\(city)")!
@@ -39,8 +39,10 @@ class WeatherService {
             return nil
         }
     }
-
     
+    
+
+    @available(iOS 15, *)
     func weatherRequestAwait() async {
         await withTaskGroup(of: Void.self) { group in
             
@@ -55,6 +57,46 @@ class WeatherService {
                 }
             }
             await group.waitForAll()
+        }
+    }
+    
+    @available(iOS 11, *)
+    func fetchData(forCity: String, dataFetched: @escaping (WeatherStruct?) -> Void) {
+        let meteoUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(String(describing: self.weatherApiKey))&units=metric&q=\(forCity)")!
+
+        let task = URLSession.shared.dataTask(with: meteoUrl) { data, response, error in
+            guard
+                error == nil,
+                let data = data
+            else {
+                print(error ?? "Unknown error")
+                dataFetched(nil)
+                return
+            }
+
+            let jsonDecoder = JSONDecoder()
+            let response = try? jsonDecoder.decode(WeatherStruct.self, from: data)
+            guard let weatherData = response else { return }
+
+            self.weatherDataArray.append(weatherData)
+            dataFetched(response)
+        }
+
+        task.resume()
+    }
+    
+    @available(iOS 11, *)
+    func weatherRequest(completion: @escaping (() -> Void)) {
+
+        DispatchQueue.main.async {
+            self.citys.forEach { city in
+                self.fetchData(forCity: city) { response in
+                    if let meteoData = response {
+                        self.weatherDataArray.append(meteoData)
+                    }
+                }
+            }
+            completion()
         }
     }
 }

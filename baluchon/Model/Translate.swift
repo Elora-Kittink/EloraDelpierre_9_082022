@@ -15,6 +15,18 @@ class Translate {
     var toLangage: String = "en"
     var frenchToEnglish: Bool = true
     
+    func getTranslation(for queryText: String, from source: String, to target: String) {
+        
+        TranslationService.shared.getTranslation(for: queryText,
+                                                 from: source,
+                                                 to: target) { results in
+            DispatchQueue.main.async {
+                self.updateDownTextView(result: results)
+            }
+    }
+    }
+    
+    
     func reverseLanguage() {
     
         if frenchToEnglish {

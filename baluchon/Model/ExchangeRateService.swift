@@ -11,8 +11,8 @@ import Foundation
 
 class ExchangeRateService {
     
-
-    func fetchExchangeRate(amount: Float, from: String, to: String) async -> ExchangeRateStruct? {
+    @available(iOS 15, *)
+    func fetchExchangeRate(amount: Float, from: String, to: String) async -> Float {
         
         let apiKey = (Bundle.main.object(forInfoDictionaryKey: "Exchange_Rate_API_KEY") as? String) ?? ""
         
@@ -21,17 +21,17 @@ class ExchangeRateService {
         do {
             let (data, response) = try await URLSession.shared.data(from: url2)
             let _data = try JSONDecoder().decode(ExchangeRateStruct.self, from: data)
-            print(data)
-            return _data
+            let exchangeRate = _data.result ?? 0
+            return exchangeRate
         } catch {
             print(error)
-            return nil
+            return 0
         }
     }
     
     
-    
-    func fetchExchangeRate(amount: Float, from: String, to: String, dataFetched: @escaping (ExchangeRateStruct?) -> Void) {
+    @available(iOS 11, *)
+    func fetchExchangeRate(amount: Float, from: String, to: String, dataFetched: @escaping (Float) -> Void) {
 
         let apiKey = Bundle.main.object(forInfoDictionaryKey: "Exchange_Rate_API_KEY") as? String
         
@@ -51,8 +51,8 @@ class ExchangeRateService {
               return
           }
           let responseJSON = try? JSONDecoder().decode(ExchangeRateStruct.self, from: data)
-
-          dataFetched(responseJSON)
+          let exchangeRate = responseJSON?.result
+          dataFetched(exchangeRate ?? 0)
       }
         
       task1.resume()

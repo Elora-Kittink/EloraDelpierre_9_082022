@@ -29,12 +29,10 @@ class TranslateViewController: UIViewController {
     
     @IBAction private func reverseLangage() {
     
-//        Translate.shared.frenchToEnglish = !Translate.shared.frenchToEnglish
         self.translate.reverseLanguage()
     }
     
     @IBAction private func launchTranslation() {
-        
         
         
         TranslationService.shared.getTranslation(for: UpTextView.text,

@@ -15,21 +15,26 @@ class TranslationService {
     
     private let apiUrl = "https://translation.googleapis.com/language/translate/v2"
     
-    func getTranslation(for queryText: String, from source: String, to target: String) async -> TranslateStruct? {
+    
+    @available(iOS 15, *)
+    func getTranslation(for queryText: String, from source: String, to target: String) async -> String {
         let translateUrl = URL(string: apiUrl)!
         
         do {
             let (data, response) = try await URLSession.shared.data(from: translateUrl)
             let _data = try JSONDecoder().decode(TranslateStruct.self, from: data)
             print(data)
-            return _data
+            let translatedText = _data.data.translations.first?.translatedText ?? "ERREUR"
+            return translatedText
         } catch {
             print(error)
-            return nil
+            return "ERREUR"
         }
         
     }
     
+    
+    @available(iOS 11, *)
     func getTranslation(for queryText: String,
                         from source: String,
                         to target: String,
