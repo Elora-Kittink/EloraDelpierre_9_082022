@@ -69,6 +69,9 @@
                                                 <rect key="frame" x="64.5" y="28" width="209.5" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <action selector="didTapExchangeField:" destination="thb-nO-gpw" eventType="editingChanged" id="3K7-zo-X6G"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>

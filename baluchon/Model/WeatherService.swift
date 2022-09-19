@@ -24,43 +24,43 @@ class WeatherService {
         self.weatherApiKey = (Bundle.main.object(forInfoDictionaryKey: "Weather_API_KEY") as? String) ?? ""
     }
     
-    @available(iOS 15, *)
-    func fetchDataAwait(forCity: String) async -> WeatherStruct? {
-        let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
-        let meteoUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(self.weatherApiKey)&units=metric&q=\(city)")!
-        
-        do {
-            let (data, response) = try await URLSession.shared.data(from: meteoUrl)
-            let _data = try JSONDecoder().decode(WeatherStruct.self, from: data)
-            print(data)
-            return _data
-        } catch {
-            print(error)
-            return nil
-        }
-    }
+
+//    func fetchDataAwait(forCity: String) async -> WeatherStruct? {
+//        let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
+//        let meteoUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(self.weatherApiKey)&units=metric&q=\(city)")!
+//
+//        do {
+//            let (data, response) = try await URLSession.shared.data(from: meteoUrl)
+//            let _data = try JSONDecoder().decode(WeatherStruct.self, from: data)
+//            print(data)
+//            return _data
+//        } catch {
+//            print(error)
+//            return nil
+//        }
+//    }
     
     
 
-    @available(iOS 15, *)
-    func weatherRequestAwait() async {
-        await withTaskGroup(of: Void.self) { group in
-            
-            self.citys.forEach { city in
-                group.addTask {
-                    print(city)
-                    let response = await self.fetchDataAwait(forCity: city)
-                    
-                    if let weatherData = response {
-                        self.weatherDataArray.append(weatherData)
-                    }
-                }
-            }
-            await group.waitForAll()
-        }
-    }
+//
+//    func weatherRequestAwait() async {
+//        await withTaskGroup(of: Void.self) { group in
+//            
+//            self.citys.forEach { city in
+//                group.addTask {
+//                    print(city)
+//                    let response = await self.fetchDataAwait(forCity: city)
+//                    
+//                    if let weatherData = response {
+//                        self.weatherDataArray.append(weatherData)
+//                    }
+//                }
+//            }
+//            await group.waitForAll()
+//        }
+//    }
     
-    @available(iOS 11, *)
+
     func fetchData(forCity: String, dataFetched: @escaping (WeatherStruct?) -> Void) {
         let meteoUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(String(describing: self.weatherApiKey))&units=metric&q=\(forCity)")!
 
@@ -85,7 +85,7 @@ class WeatherService {
         task.resume()
     }
     
-    @available(iOS 11, *)
+ 
     func weatherRequest(completion: @escaping (() -> Void)) {
 
         DispatchQueue.main.async {

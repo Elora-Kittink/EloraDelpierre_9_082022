@@ -12,18 +12,18 @@ class ExchangeRate {
     
     var exchangeRateData: [Float] = []
 
-    let exchangeRateService = ExchangeRateService()
+//    let exchangeRateService = ExchangeRateService()
     
-    func getExchangeRate(amount: Float, from: String, to: String) {
-        DispatchQueue.main.async {
-            self.exchangeRateService.fetchExchangeRate(amount: amount, from: from, to: to) { response in
-                    self.exchangeRateData.append(response)
-                    print(response)
-                }
-                
-            
-        }
-    }
+//    func getExchangeRate(amount: Float, from: String, to: String) {
+//        DispatchQueue.main.async {
+//            self.exchangeRateService.fetchExchangeRate(amount: amount, from: from, to: to) { response in
+//                    self.exchangeRateData.append(response)
+//                    print(response)
+//                }
+//
+//
+//        }
+//    }
     
 }
 

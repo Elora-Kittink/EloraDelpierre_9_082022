@@ -21,7 +21,7 @@ struct ExchangeRateStruct: Decodable {
     let query: Query?
     let success: Bool
     let date: String
-    let result: Float?
+    let result: Float
     
 }
 

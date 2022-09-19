@@ -7,24 +7,24 @@
 
 import UIKit
 
-protocol ExchangeRateDelegate: AnyObject {
-    func updateScreen(result: String)
-}
-
 class ExchangeViewController: UIViewController {
     
-    @IBOutlet weak var euroLabel: UITextField! {
-        didSet {
-            self.euroLabel.delegate = self
-        }
-    }
-    
+    // MARK: - Outlets
+    @IBOutlet weak var euroLabel: UITextField!
     @IBOutlet weak var dollarLabel: UITextField!
     
+    // MARK: - Variables
+    private var exchangeRateService: ExchangeRateService!
+    
+    
+    // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.exchangeRateService = ExchangeRateService(delegate: self)
     }
 
+    // MARK: - Actions
     @IBAction private func didTapExchangeField(_ sender: UITextField) {
         let from: String
         let amount: Float
@@ -42,25 +42,31 @@ class ExchangeViewController: UIViewController {
             to = "EUR"
         }
 
-        ExchangeRate().getExchangeRate(amount: amount,
+        self.exchangeRateService.fetchExchangeRate(amount: amount,
                                        from: from,
                                        to: to)
     }
     
 }
 
-extension ExchangeViewController: ExchangeRateDelegate, UITextFieldDelegate {
+// MARK: - ExchangeRateServiceDelegate
+extension ExchangeViewController: ExchangeRateServiceDelegate {
     
-    func updateScreen(result: String) { }
-
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
-        guard let oldText = textField.text, let r = Range(range, in: oldText) else { return false }
-        let newText = oldText.replacingCharacters(in: r, with: string)
-//        guard let value = Double(newText.replacingOccurrences(of: ",", with: ".")) else { return false }
-        return true
+    func didFinish(result: Float, from: String) {
+        print("🥰 \(result)")
+        
+        DispatchQueue.main.async {
+            if from.lowercased() == "eur" {
+                self.dollarLabel.text = "\(result)"
+            } else if from.lowercased() == "usd" {
+                self.euroLabel.text = "\(result)"
+            }
+        }
     }
-
+    
+    func didFail(error: Error) {
+        print("🥹 Error: \(error.localizedDescription)")
+    }
 }
 
 

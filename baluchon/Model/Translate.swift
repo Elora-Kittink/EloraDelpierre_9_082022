@@ -21,7 +21,7 @@ class Translate {
                                                  from: source,
                                                  to: target) { results in
             DispatchQueue.main.async {
-                self.updateDownTextView(result: results)
+//                self.updateDownTextView(result: results)
             }
     }
     }

@@ -29,7 +29,7 @@ class WeatherViewController: UIViewController {
 // ici on appelle une fonction qui va lancer le call API
         
         Task {
-            await WeatherService.shared.weatherRequestAwait()
+//            await WeatherService.shared.weatherRequestAwait()
             self.weatherTableView.reloadData()
         }
     }
@@ -46,18 +46,19 @@ class MeteoCell: UITableViewCell {
 extension WeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        WeatherService.shared.weatherDataArray.count
+//        WeatherService.shared.weatherDataArray.count
+        0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MeteoCityCell",
                                                  for: indexPath) as! MeteoCell
         
-        let cityShared = WeatherService.shared.weatherDataArray[indexPath.row]
+//        let cityShared = WeatherService.shared.weatherDataArray[indexPath.row]
         
-        cell.meteoLabel.text = "\(cityShared.name)"
-        cell.meteoTemperature.text = "\(cityShared.main.temp) °C"
-        cell.meteoImage.image = UIImage(named: cityShared.weather[0].icon)
+//        cell.meteoLabel.text = "\(cityShared.name)"
+//        cell.meteoTemperature.text = "\(cityShared.main.temp) °C"
+//        cell.meteoImage.image = UIImage(named: cityShared.weather[0].icon)
         
         
         return cell

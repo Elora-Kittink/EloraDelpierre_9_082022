@@ -6,8 +6,8 @@
 	<string>$(Translate_API_KEY)</string>
 	<key>Weather_API_KEY</key>
 	<string>$(Weather_API_KEY)</string>
-	<key>Exchange_Rate_APIKEY</key>
-	<string>$(Exchange_Rate_APIKEY)</string>
+	<key>Exchange_Rate_API_KEY</key>
+	<string>$(Exchange_Rate_API_KEY)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
