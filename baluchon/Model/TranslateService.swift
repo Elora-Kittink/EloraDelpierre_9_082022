@@ -7,39 +7,23 @@
 
 import Foundation
 
-class TranslationService {
+protocol TranslateServiceDelegate: AnyObject {
+    func didFinish(result: String)
+    func didFail(error: Error)
+}
+
+class TranslateService {
     
-    static let shared = TranslationService()
+    weak var delegate: TranslateServiceDelegate!
     
-    let apiKey = Bundle.main.object(forInfoDictionaryKey: "Translate_API_KEY") as? String
-    
-    private let apiUrl = "https://translation.googleapis.com/language/translate/v2"
-    
-    
-    
-//
-//    func getTranslation(for queryText: String, from source: String, to target: String) async -> String {
-//        let translateUrl = URL(string: apiUrl)!
-//
-//        do {
-//            let (data, response) = try await URLSession.shared.data(from: translateUrl)
-//            let _data = try JSONDecoder().decode(TranslateStruct.self, from: data)
-//            print(data)
-//            let translatedText = _data.data.translations.first?.translatedText ?? "ERREUR"
-//            return translatedText
-//        } catch {
-//            print(error)
-//            return "ERREUR"
-//        }
-//
-//    }
-    
-    
+    init(delegate: TranslateServiceDelegate) {
+        self.delegate = delegate
+    }
 
     func getTranslation(for queryText: String,
                         from source: String,
-                        to target: String,
-                        dataFetched: @escaping (_ results: String) -> Void) {
+                        to target: String) {
+        
         let urlParams: [String: String] = [
             "q": queryText,
             "source": source,
@@ -47,28 +31,46 @@ class TranslationService {
             "format": "text"
         ]
         
-        let url = URL(string: self.apiUrl + "?key=" + (self.apiKey ?? ""))!
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "Translate_API_KEY") as? String
+        else {
+            self.delegate.didFail(error: GlobalError.apiKeyNotFound)
+            return
+        }
         
-        var request = URLRequest(url: url)
+        guard let ApiUrl = URL(string: "https://translation.googleapis.com/language/translate/v2?key=\(apiKey)")
+        else {
+            self.delegate.didFail(error: GlobalError.urlApiNotCreated)
+            return
+        }
+        
+        var request = URLRequest(url: ApiUrl)
         request.httpMethod = "POST"
         request.setValue("application/json; charset=utf-8", forHTTPHeaderField: "Content-Type")
-        request.httpBody = try? JSONEncoder().encode(urlParams)
+        
+        do {
+            request.httpBody = try JSONEncoder().encode(urlParams)
+        } catch {
+            self.delegate.didFail(error: error)
+            return
+        }
         
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard let data = data,
-                  error == nil
-            else {
+            if let error = error {
+                self.delegate.didFail(error: error)
+                return
+            }
+            guard let data = data else {
+                self.delegate.didFail(error: GlobalError.dataNotFound)
                 return
             }
             
-            guard let response = response as? HTTPURLResponse,
-                  response.statusCode == 200
-            else {
-                return
+            do {
+                let responseJSON = try JSONDecoder().decode(TranslateStruct.self, from: data)
+                self.delegate.didFinish(result: responseJSON.data.translations[0].translatedText)
             }
-            
-            let responseJSON = try? JSONDecoder().decode(TranslateStruct.self, from: data)
-            dataFetched(responseJSON?.data.translations.first?.translatedText ?? "FAIL")
+            catch {
+                self.delegate.didFail(error: error)
+            }
         }
         
         task.resume()

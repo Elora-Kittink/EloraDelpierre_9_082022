@@ -7,96 +7,91 @@
 
 import Foundation
 
-//private let kApiKey = "6549c66045e304a584b58f52e94acf59"
+enum WeatherError: LocalizedError {
+    
+    case cityNotEncoding
+    
+    var errorDescription: String? {
+        switch self {
+        case .cityNotEncoding:
+            return "City not recongnized"
+        }
+    }
+}
+
+protocol WeatherServiceDelegate: AnyObject {
+    
+    func didFinish(result: [WeatherStruct])
+}
 
 class WeatherService {
     
-    private var weatherApiKey: String
+    weak var delegate: WeatherServiceDelegate!
     
-        var weatherDataArray: [WeatherStruct] = []
-    
-    // MARK: - Variables
-    
-    let citys = ["Paris", "New York"]
-    
-    // MARK: - Init
-    private init() {
-        self.weatherApiKey = (Bundle.main.object(forInfoDictionaryKey: "Weather_API_KEY") as? String) ?? ""
+    init(delegate: WeatherServiceDelegate) {
+        self.delegate = delegate
     }
-    
 
-//    func fetchDataAwait(forCity: String) async -> WeatherStruct? {
-//        let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) ?? ""
-//        let meteoUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(self.weatherApiKey)&units=metric&q=\(city)")!
-//
-//        do {
-//            let (data, response) = try await URLSession.shared.data(from: meteoUrl)
-//            let _data = try JSONDecoder().decode(WeatherStruct.self, from: data)
-//            print(data)
-//            return _data
-//        } catch {
-//            print(error)
-//            return nil
-//        }
-//    }
-    
-    
+    private func fetchOneCity(forCity: String, dataFetched: @escaping (WeatherStruct?, Error?) -> Void) {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "Weather_API_KEY") as? String else {
+            dataFetched(nil, GlobalError.apiKeyNotFound)
+            return
+        }
+        
+        guard let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        else {
+            dataFetched(nil, WeatherError.cityNotEncoding)
+            return
+        }
+        
+        guard let apiUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric&q=\(city)")
+        else {
+            dataFetched(nil, GlobalError.urlApiNotCreated)
+            return
+        }
 
-//
-//    func weatherRequestAwait() async {
-//        await withTaskGroup(of: Void.self) { group in
-//            
-//            self.citys.forEach { city in
-//                group.addTask {
-//                    print(city)
-//                    let response = await self.fetchDataAwait(forCity: city)
-//                    
-//                    if let weatherData = response {
-//                        self.weatherDataArray.append(weatherData)
-//                    }
-//                }
-//            }
-//            await group.waitForAll()
-//        }
-//    }
-    
-
-    func fetchData(forCity: String, dataFetched: @escaping (WeatherStruct?) -> Void) {
-        let meteoUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(String(describing: self.weatherApiKey))&units=metric&q=\(forCity)")!
-
-        let task = URLSession.shared.dataTask(with: meteoUrl) { data, response, error in
-            guard
-                error == nil,
-                let data = data
-            else {
-                print(error ?? "Unknown error")
-                dataFetched(nil)
+        let task = URLSession.shared.dataTask(with: apiUrl) { data, response, error in
+            if let error = error {
+                dataFetched(nil, error)
                 return
             }
+            
+          guard let data = data else {
+              dataFetched(nil, GlobalError.dataNotFound)
+              return
+          }
 
-            let jsonDecoder = JSONDecoder()
-            let response = try? jsonDecoder.decode(WeatherStruct.self, from: data)
-            guard let weatherData = response else { return }
-
-            self.weatherDataArray.append(weatherData)
-            dataFetched(response)
+            do {
+                let responseJSON = try JSONDecoder().decode(WeatherStruct.self,
+                                                            from: data)
+                dataFetched(responseJSON, nil)
+            } catch {
+                dataFetched(nil, error)
+            }
         }
 
         task.resume()
     }
     
- 
-    func weatherRequest(completion: @escaping (() -> Void)) {
-
-        DispatchQueue.main.async {
-            self.citys.forEach { city in
-                self.fetchData(forCity: city) { response in
-                    if let meteoData = response {
-                        self.weatherDataArray.append(meteoData)
+    func fetchForCities(cities: [String]) {
+        var result: [WeatherStruct?] = []
+        
+        cities.forEach { city in
+            self.fetchOneCity(forCity: city) { response, error in
+                if let error = error {
+                    print("🥹 Error: \(error.localizedDescription)")
+                }
+                
+                result.append(response)
+                
+                if result.count == cities.count {
+                    let realResult = result.compactMap { data in
+                        return data
                     }
+                    
+                    self.delegate.didFinish(result: realResult)
                 }
             }
-            completion()
         }
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 class ExchangeRate {
     
-    var exchangeRateData: [Float] = []
+//    var exchangeRateData: [Float] = []
 
 //    let exchangeRateService = ExchangeRateService()
     

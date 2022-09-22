@@ -10,41 +10,67 @@ import UIKit
 class ExchangeViewController: UIViewController {
     
     // MARK: - Outlets
-    @IBOutlet weak var euroLabel: UITextField!
-    @IBOutlet weak var dollarLabel: UITextField!
+    @IBOutlet weak var downTextField: UITextField!
+    @IBOutlet weak var upTextField: UITextField!
+    @IBOutlet weak var upLabel: UILabel!
+    @IBOutlet weak var downLabel: UILabel!
+    @IBOutlet weak var toggleButton: UIButton!
+    @IBOutlet weak var launchButton: UIButton!
+    @IBOutlet weak var spiner: UIActivityIndicatorView!
     
     // MARK: - Variables
     private var exchangeRateService: ExchangeRateService!
-    
+    private var fromCurrency: String = "usd"
+    private var toCurrency: String = "eur"
+    private var usdToEur: Bool = true
     
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        spiner.hidesWhenStopped = true
         self.exchangeRateService = ExchangeRateService(delegate: self)
+        
+        self.upTextField.delegate = self
+        
+        let toolBar = UIToolbar()
+        let doneButton = UIBarButtonItem(title: "Valider",
+                                         style: .done,
+                                         target: self,
+                                         action: #selector(self.closeKeyboard))
+        toolBar.setItems([doneButton], animated: false)
+        toolBar.sizeToFit()
+        upTextField.inputAccessoryView = toolBar
     }
 
     // MARK: - Actions
-    @IBAction private func didTapExchangeField(_ sender: UITextField) {
-        let from: String
-        let amount: Float
-        let to: String
-
-        if sender == self.euroLabel {
-            from = "EUR"
-            let senderText = sender.text
-            amount = Float(senderText ?? "") ?? 0
-            to = "USD"
+    
+    
+    @IBAction private func launchExchangeRate() {
+        spiner.startAnimating()
+        launchButton.isEnabled = false
+        self.exchangeRateService.fetchExchangeRate(amount: upTextField.text,
+                                       from: fromCurrency,
+                                       to: toCurrency)
+    }
+    
+    @IBAction private func toggleCurrency() {
+        self.usdToEur.toggle()
+        if usdToEur {
+            fromCurrency = "usd"
+            toCurrency = "eur"
+            upLabel.text = "Dollar"
+            downLabel.text = "Euro"
         } else {
-            from = "USD"
-            let senderText = sender.text
-            amount = Float(senderText ?? "") ?? 0
-            to = "EUR"
+            fromCurrency = "usd"
+            toCurrency = "eur"
+            upLabel.text = "Euro"
+            downLabel.text = "Dollar"
         }
-
-        self.exchangeRateService.fetchExchangeRate(amount: amount,
-                                       from: from,
-                                       to: to)
+    }
+    
+    @objc
+    func closeKeyboard() {
+        upTextField.resignFirstResponder()
     }
     
 }
@@ -57,11 +83,14 @@ extension ExchangeViewController: ExchangeRateServiceDelegate {
         
         DispatchQueue.main.async {
             if from.lowercased() == "eur" {
-                self.dollarLabel.text = "\(result)"
+                self.upTextField.text = "\(result)"
             } else if from.lowercased() == "usd" {
-                self.euroLabel.text = "\(result)"
+                self.downTextField.text = "\(result)"
             }
+            self.spiner.stopAnimating()
+            self.launchButton.isEnabled = true
         }
+        
     }
     
     func didFail(error: Error) {
@@ -69,4 +98,24 @@ extension ExchangeViewController: ExchangeRateServiceDelegate {
     }
 }
 
+// MARK: - UITextFieldDelegate
+extension ExchangeViewController: UITextFieldDelegate {
+    
+    //    on veut remplacer la virgule par un point + on veut empêcher de commencer par une virgule +
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        let containsDot = textField.text?.contains(".") ?? false
+        
+        if (range.location == 0 && string == ",") || (containsDot && string == ",") {
+            return false
+        }
+        
+        if string == "," {
+            textField.text = (textField.text ?? "") + "."
+            return false
+        }
+        
+        return true
+    }
+}
 

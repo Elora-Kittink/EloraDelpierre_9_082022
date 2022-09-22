@@ -57,40 +57,42 @@
                                 <rect key="frame" x="70" y="358" width="274" height="180"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Jxo-3L-in8">
-                                        <rect key="frame" x="0.0" y="0.0" width="274" height="90"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="274" height="74.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dollar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jum-KO-hDN">
-                                                <rect key="frame" x="0.0" y="35" width="44.5" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="27" width="44.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ihw-Hq-Bci">
-                                                <rect key="frame" x="64.5" y="28" width="209.5" height="34"/>
+                                                <rect key="frame" x="64.5" y="20.5" width="209.5" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                                <connections>
-                                                    <action selector="didTapExchangeField:" destination="thb-nO-gpw" eventType="editingChanged" id="3K7-zo-X6G"/>
-                                                </connections>
+                                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mFh-Qk-Zao">
+                                        <rect key="frame" x="0.0" y="74.5" width="76" height="31"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Inverser"/>
+                                        <connections>
+                                            <action selector="toggleCurrency" destination="thb-nO-gpw" eventType="touchUpInside" id="mXU-VA-smI"/>
+                                        </connections>
+                                    </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1gp-BV-SAF">
-                                        <rect key="frame" x="0.0" y="90" width="274" height="90"/>
+                                        <rect key="frame" x="0.0" y="105.5" width="274" height="74.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Euro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qCA-8W-GKw">
-                                                <rect key="frame" x="0.0" y="35" width="64.5" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="27" width="64.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ahZ-8C-hcZ">
-                                                <rect key="frame" x="64.5" y="28" width="209.5" height="34"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ahZ-8C-hcZ">
+                                                <rect key="frame" x="64.5" y="20.5" width="209.5" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
-                                                <connections>
-                                                    <action selector="didTapExchangeField:" destination="thb-nO-gpw" eventType="editingChanged" id="Rwb-ub-1yh"/>
-                                                </connections>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -103,6 +105,20 @@
                                     <constraint firstItem="1gp-BV-SAF" firstAttribute="height" secondItem="Jxo-3L-in8" secondAttribute="height" id="kBy-Sv-gxD"/>
                                 </constraints>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gGq-y3-wSC">
+                                <rect key="frame" x="173" y="600" width="69" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Valider"/>
+                                <connections>
+                                    <action selector="launchExchangeRate" destination="thb-nO-gpw" eventType="touchUpInside" id="mG7-hf-uFK"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="fSH-aa-GRV">
+                                <rect key="frame" x="197" y="258" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="IQl-Rt-tNW"/>
                         <color key="backgroundColor" systemColor="systemBrownColor"/>
@@ -114,8 +130,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="ivd-3P-tLQ"/>
                     <connections>
-                        <outlet property="dollarLabel" destination="Ihw-Hq-Bci" id="Mpi-3Y-H1c"/>
-                        <outlet property="euroLabel" destination="ahZ-8C-hcZ" id="vYP-lB-MCG"/>
+                        <outlet property="downLabel" destination="qCA-8W-GKw" id="I1v-RB-xaf"/>
+                        <outlet property="downTextField" destination="ahZ-8C-hcZ" id="LHq-jD-2Je"/>
+                        <outlet property="launchButton" destination="gGq-y3-wSC" id="TpS-vf-lYj"/>
+                        <outlet property="spiner" destination="fSH-aa-GRV" id="egE-hN-cre"/>
+                        <outlet property="toggleButton" destination="mFh-Qk-Zao" id="rLD-C7-CNI"/>
+                        <outlet property="upLabel" destination="Jum-KO-hDN" id="Jo3-7a-dFG"/>
+                        <outlet property="upTextField" destination="Ihw-Hq-Bci" id="kdd-m6-FsD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JXM-9i-DyU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -273,7 +294,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pOz-KY-xk6">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="pOz-KY-xk6">
                                         <rect key="frame" x="0.0" y="28.5" width="240" height="128"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -301,6 +322,11 @@
                                     <action selector="launchTranslation" destination="4Mg-jP-t82" eventType="touchUpInside" id="ykt-OL-Cmz"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="2W3-JT-gtr">
+                                <rect key="frame" x="197" y="407" width="20" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="srn-8N-9uQ"/>
                         <color key="backgroundColor" red="0.71764705880000002" green="0.3799999952" blue="0.3799999952" alpha="1" colorSpace="calibratedRGB"/>
@@ -330,6 +356,7 @@
                         <outlet property="UpLabel" destination="ans-zL-GQU" id="HXv-Cg-g1W"/>
                         <outlet property="UpTextView" destination="E3T-QU-3wq" id="X67-Lj-BK6"/>
                         <outlet property="reverseBtn" destination="rYD-uL-uT6" id="Wt1-Ap-5we"/>
+                        <outlet property="spiner" destination="2W3-JT-gtr" id="dcF-o1-eLu"/>
                         <outlet property="translateBtn" destination="Hn1-5Z-4ZD" id="05A-ms-fIC"/>
                     </connections>
                 </viewController>

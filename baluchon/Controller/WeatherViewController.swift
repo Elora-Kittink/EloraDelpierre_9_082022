@@ -7,29 +7,35 @@
 
 import UIKit
 
-// ICI PROTOCOL POUR COMMUNIQUER
-
-protocol WeatherDelegate: AnyObject {
-    
-    func updateScreen(newMeteoTemperature: String,
-                      newMeteoImage: UIImage,
-                      newMeteoLabel: String)
-}
-
 class WeatherViewController: UIViewController {
 
+    // MARK: - Outlets
     @IBOutlet weak var weatherTableView: UITableView!
     
-    let newWeatherModel = WeatherModel()
+    // MARK: - Variables
+    private var weatherService: WeatherService!
+    private var data: [WeatherStruct] = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.weatherService = WeatherService(delegate: self)
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.weatherService.fetchForCities(cities: ["Paris", "New York", "Berlin", "La Rochelle"])
+    }
+}
+
+// MARK: - WeatherServiceDelegate
+extension WeatherViewController: WeatherServiceDelegate {
+    
+    func didFinish(result: [WeatherStruct]) {
+        self.data = result
         
-// ici on appelle une fonction qui va lancer le call API
-        
-        Task {
-//            await WeatherService.shared.weatherRequestAwait()
+        DispatchQueue.main.async {
             self.weatherTableView.reloadData()
         }
     }
@@ -37,38 +43,34 @@ class WeatherViewController: UIViewController {
 
 class MeteoCell: UITableViewCell {
 
-    @IBOutlet weak var meteoImage: UIImageView!
-    @IBOutlet weak var meteoTemperature: UILabel!
-    @IBOutlet weak var meteoLabel: UILabel!
+    @IBOutlet private weak var meteoImage: UIImageView!
+    @IBOutlet private weak var meteoTemperature: UILabel!
+    @IBOutlet private weak var meteoLabel: UILabel!
+    
+    func configure(image: UIImage?, temperature: String, city: String) {
+        self.meteoLabel.text = city
+        self.meteoTemperature.text = temperature
+        self.meteoImage.image = image
+    }
 }
 
 // MARK: - UITableViewDataSource
 extension WeatherViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        WeatherService.shared.weatherDataArray.count
-        0
+        self.data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MeteoCityCell",
                                                  for: indexPath) as! MeteoCell
         
-//        let cityShared = WeatherService.shared.weatherDataArray[indexPath.row]
+        let cityModel = self.data[indexPath.row]
         
-//        cell.meteoLabel.text = "\(cityShared.name)"
-//        cell.meteoTemperature.text = "\(cityShared.main.temp) °C"
-//        cell.meteoImage.image = UIImage(named: cityShared.weather[0].icon)
-        
+        cell.configure(image: UIImage(named: cityModel.weather.first?.icon ?? ""),
+                       temperature: "\(cityModel.main.temp) °C",
+                       city: "\(cityModel.name)")
         
         return cell
-    }
-}
-
-// MARK: - WeatherDelegate
-extension WeatherViewController: WeatherDelegate {
-    
-    func updateScreen(newMeteoTemperature: String, newMeteoImage: UIImage, newMeteoLabel: String) {
-        
     }
 }
