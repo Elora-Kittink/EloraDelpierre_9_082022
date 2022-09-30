@@ -61,8 +61,8 @@ class ExchangeViewController: UIViewController {
             upLabel.text = "Dollar"
             downLabel.text = "Euro"
         } else {
-            fromCurrency = "usd"
-            toCurrency = "eur"
+            fromCurrency = "eur"
+            toCurrency = "usd"
             upLabel.text = "Euro"
             downLabel.text = "Dollar"
         }
@@ -82,11 +82,7 @@ extension ExchangeViewController: ExchangeRateServiceDelegate {
         print("🥰 \(result)")
         
         DispatchQueue.main.async {
-            if from.lowercased() == "eur" {
-                self.upTextField.text = "\(result)"
-            } else if from.lowercased() == "usd" {
-                self.downTextField.text = "\(result)"
-            }
+            self.downTextField.text = "\(result)"
             self.spiner.stopAnimating()
             self.launchButton.isEnabled = true
         }
