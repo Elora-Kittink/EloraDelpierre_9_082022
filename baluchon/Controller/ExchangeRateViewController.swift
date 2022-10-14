@@ -48,7 +48,7 @@ class ExchangeViewController: UIViewController {
     @IBAction private func launchExchangeRate() {
         spiner.startAnimating()
         launchButton.isEnabled = false
-        self.exchangeRateService.fetchExchangeRate(amount: upTextField.text,
+        self.exchangeRateService.fetchexangerate(amount: upTextField.text,
                                        from: fromCurrency,
                                        to: toCurrency)
     }

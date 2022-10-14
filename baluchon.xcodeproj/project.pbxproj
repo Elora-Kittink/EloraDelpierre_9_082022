@@ -18,7 +18,7 @@
 		D552906B28A3E5A100AAA663 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D552906A28A3E5A100AAA663 /* Assets.xcassets */; };
 		D552906E28A3E5A100AAA663 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D552906C28A3E5A100AAA663 /* LaunchScreen.storyboard */; };
 		D552907A28A3EC9600AAA663 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = D552907928A3EC9600AAA663 /* Weather.swift */; };
-		D552907C28A3ECA600AAA663 /* ExchangeRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D552907B28A3ECA600AAA663 /* ExchangeRate.swift */; };
+		D598516028F8401300E03417 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D598515F28F8401300E03417 /* NetworkService.swift */; };
 		D598A81328E750FD008B2DB3 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D598A81228E750FD008B2DB3 /* WeatherTests.swift */; };
 		D598A81528E75117008B2DB3 /* ExchangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D598A81428E75117008B2DB3 /* ExchangeTests.swift */; };
 		D598A81728E75133008B2DB3 /* TranslateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D598A81628E75133008B2DB3 /* TranslateTests.swift */; };
@@ -52,7 +52,7 @@
 		D552906D28A3E5A100AAA663 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D552906F28A3E5A100AAA663 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D552907928A3EC9600AAA663 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
-		D552907B28A3ECA600AAA663 /* ExchangeRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRate.swift; sourceTree = "<group>"; };
+		D598515F28F8401300E03417 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		D598A80928E7506C008B2DB3 /* baluchonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = baluchonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D598A81228E750FD008B2DB3 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
 		D598A81428E75117008B2DB3 /* ExchangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeTests.swift; sourceTree = "<group>"; };
@@ -145,7 +145,6 @@
 		D552907828A3E5D900AAA663 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				D552907B28A3ECA600AAA663 /* ExchangeRate.swift */,
 				D53C528B28B3BE3F0013EB7B /* ExchangeRateService.swift */,
 				D532340A28B76E4D00E22F1F /* ExchangeRateStruct.swift */,
 				D59A749E28BF9C14004F9F8E /* TranslateService.swift */,
@@ -153,6 +152,7 @@
 				D5A698B228C5EA1400019E00 /* WeatherService.swift */,
 				D5A698B428C5EA4300019E00 /* WeatherStruct.swift */,
 				D5A698B628C6380D00019E00 /* TranslateStruct.swift */,
+				D598515F28F8401300E03417 /* NetworkService.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -279,12 +279,12 @@
 				D552907A28A3EC9600AAA663 /* Weather.swift in Sources */,
 				D552906628A3E59E00AAA663 /* ExchangeRateViewController.swift in Sources */,
 				D532340B28B76E4D00E22F1F /* ExchangeRateStruct.swift in Sources */,
-				D552907C28A3ECA600AAA663 /* ExchangeRate.swift in Sources */,
 				D552906228A3E59E00AAA663 /* AppDelegate.swift in Sources */,
 				D53C528A28B3AD970013EB7B /* WeatherViewController.swift in Sources */,
 				D5A698B328C5EA1400019E00 /* WeatherService.swift in Sources */,
 				D53C528C28B3BE3F0013EB7B /* ExchangeRateService.swift in Sources */,
 				D552906428A3E59E00AAA663 /* SceneDelegate.swift in Sources */,
+				D598516028F8401300E03417 /* NetworkService.swift in Sources */,
 				D53C528828B3AD830013EB7B /* TranslateViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

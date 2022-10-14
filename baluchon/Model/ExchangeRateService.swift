@@ -41,6 +41,38 @@ class ExchangeRateService {
         self.delegate = delegate
     }
 
+    
+    
+    
+    func fetchexangerate(amount: String?, from: String, to: String) {
+        
+        guard let amount = amount,
+              let floatAmount = Float(amount)
+        else {
+            self.delegate.didFail(error: GlobalError.dataNotFound)
+            return
+        }
+        
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "Exchange_Rate_API_KEY") as? String else {
+            self.delegate.didFail(error: GlobalError.apiKeyNotFound)
+            return
+        }
+        
+         let apiUrl = "https://api.apilayer.com/fixer/convert?to=\(to)&from=\(from)&amounts=\(floatAmount)&apikey=\(apiKey)"
+        
+        NetworkService.shared.launchAPICall(url: apiUrl, expectingReturnType: ExchangeRateStruct.self, completion: { result in
+            switch result {
+            case .success(let rate):
+                self.delegate.didFinish(result: rate.result, from: from)
+            case .failure(let error):
+                self.delegate.didFail(error: error)
+            }
+            
+        })
+    }
+    
+    
+    
     func fetchExchangeRate(amount: String?, from: String, to: String) {
         
         guard let amount = amount,
