@@ -20,8 +20,8 @@ class ExchangeViewController: UIViewController {
     
     // MARK: - Variables
     private var exchangeRateService: ExchangeRateService!
-    private var fromCurrency: String = "usd"
-    private var toCurrency: String = "eur"
+    private var fromCurrency: String = "USD"
+    private var toCurrency: String = "EUR"
     private var usdToEur: Bool = true
     
     // MARK: - View life cycle

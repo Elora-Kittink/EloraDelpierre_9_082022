@@ -3,19 +3,15 @@
 //  baluchon
 //
 //  Created by Elora on 13/10/2022.
-//  "\(self.rootTranslate)?key=\(Constant.GoogleranslationApiKey)&format=\(translationFormat)&q=\(q!)&target=\(target!)&source=\(source!)".addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-
-
-//"?key=\(apiKey)&format=\(format)&q=\(q!)&target=\(target!)&source=\(source!)"
 
 import Foundation
 
 class NetworkService {
    static let shared = NetworkService()
 
-    public func launchAPICall<T: Decodable>(url: String, expectingReturnType: T.Type, completion: @escaping ((Result<T, Error>) -> Void)) {
+    public func launchAPICall<T: Decodable>(url: URLRequest, expectingReturnType: T.Type, completion: @escaping ((Result<T, Error>) -> Void)) {
 
-        let task = URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: { data, _, error in
+        let task = URLSession.shared.dataTask(with: url, completionHandler: { data, _, error in
             guard let data = data , error == nil else {
                 return
             }
@@ -24,13 +20,11 @@ class NetworkService {
                 decodedResult = try JSONDecoder().decode(T.self, from: data)
             }
             catch {
-//                gestion d'erreur
-                print("☠️\(error)")
+                print("decoding error : ☠️\(error)")
             }
             guard let result = decodedResult else {
-                print("☠️\(String(describing: error))")
+                print("result error : ☠️\(String(describing: error))")
                 return
-//                gestion d'erreur
             }
             completion(.success(result))
         })

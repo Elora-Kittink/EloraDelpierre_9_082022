@@ -8,7 +8,10 @@
 import XCTest
 
 class WeatherTests: XCTestCase {
-
+// tester le numéro de réponse de l'API?
+// tester la clé API
+// tester qu'on ait bien une ville
+// 
     
 
 }

@@ -31,6 +31,10 @@ class WeatherViewController: UIViewController {
 
 // MARK: - WeatherServiceDelegate
 extension WeatherViewController: WeatherServiceDelegate {
+    func didFail(error: Error) {
+        print("☠️ error type : \(error)")
+    }
+    
     
     func didFinish(result: [WeatherStruct]) {
         self.data = result
@@ -39,6 +43,7 @@ extension WeatherViewController: WeatherServiceDelegate {
             self.weatherTableView.reloadData()
         }
     }
+    
 }
 
 class MeteoCell: UITableViewCell {

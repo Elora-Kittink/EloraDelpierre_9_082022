@@ -67,7 +67,7 @@ class TranslateViewController: UIViewController {
     @IBAction private func launchTranslation() {
         spiner.startAnimating()
         self.translateBtn.isEnabled = false
-        self.translateService.gettranslation(for: UpTextView.text,
+        self.translateService.getTranslation(for: UpTextView.text,
                                              from: self.fromLangage,
                                              to: self.toLangage)
     }
