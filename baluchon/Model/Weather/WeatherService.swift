@@ -33,9 +33,10 @@ protocol WeatherServiceDelegate: AnyObject {
 
 class WeatherService {
     
-    weak var delegate: WeatherServiceDelegate!
+    private weak var delegate: WeatherServiceDelegate!
+    private var service: NetworkService!
     
-    init(delegate: WeatherServiceDelegate) {
+    init(delegate: WeatherServiceDelegate, service: NetworkService) {
         self.delegate = delegate
     }
     
@@ -82,7 +83,7 @@ class WeatherService {
         }
         let request = URLRequest(url: apiUrl)
         
-        NetworkService.shared.launchAPICall(url: request, expectingReturnType: WeatherStruct.self, completion: { result in
+        self.service.launchAPICall(url: request, expectingReturnType: WeatherStruct.self, completion: { result in
             switch result {
             case .success(let weather):
 //                ICI AUSSI RETURN RESULT COMME CA ON PEUT LE TESTER EN + DE L'ENVOYER AU DELEGATE?

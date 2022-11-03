@@ -19,7 +19,8 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.weatherService = WeatherService(delegate: self)
+        self.weatherService = WeatherService(delegate: self,
+                                             service: NetworkService())
     }
     
     override func viewWillAppear(_ animated: Bool) {

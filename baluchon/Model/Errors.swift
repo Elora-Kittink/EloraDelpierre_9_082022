@@ -11,7 +11,8 @@ enum GlobalError: LocalizedError {
     
     case apiKeyNotFound,
          urlApiNotCreated,
-         dataNotFound
+         dataNotFound,
+         invalidAmount
     
     var errorDescription: String? {
         switch self {
@@ -21,6 +22,9 @@ enum GlobalError: LocalizedError {
             return "URL Api Not Created"
         case .dataNotFound:
             return "Data Not Found"
+            
+        case .invalidAmount:
+            return "Montant invalide"
         }
     }
 }

@@ -28,7 +28,7 @@ class ExchangeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         spiner.hidesWhenStopped = true
-        self.exchangeRateService = ExchangeRateService(delegate: self)
+        self.exchangeRateService = ExchangeRateService()
         
         self.upTextField.delegate = self
         
@@ -41,16 +41,28 @@ class ExchangeViewController: UIViewController {
         toolBar.sizeToFit()
         upTextField.inputAccessoryView = toolBar
     }
-
+    
     // MARK: - Actions
     
     
     @IBAction private func launchExchangeRate() {
         spiner.startAnimating()
         launchButton.isEnabled = false
-        self.exchangeRateService.fetchexangerate(amount: upTextField.text,
-                                       from: fromCurrency,
-                                       to: toCurrency)
+        //        self.exchangeRateService.fetchExchangeRate(amount: upTextField.text,
+        //                                       from: fromCurrency,
+        //                                                   to: toCurrency)
+        self.exchangeRateService.fetchExchangeRate(amount: upTextField.text, from: fromCurrency, to: toCurrency) { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure:
+                    print("🥹 Error")
+                case .success(let changeRate):
+                    self.downTextField.text = "\(changeRate)"
+                    self.spiner.stopAnimating()
+                    self.launchButton.isEnabled = true
+                }
+            }
+        }
     }
     
     @IBAction private func toggleCurrency() {
