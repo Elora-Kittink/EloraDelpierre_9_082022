@@ -19,6 +19,7 @@
 		D552906E28A3E5A100AAA663 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D552906C28A3E5A100AAA663 /* LaunchScreen.storyboard */; };
 		D552907A28A3EC9600AAA663 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = D552907928A3EC9600AAA663 /* Weather.swift */; };
 		D573EC3C2912C8B300421D0B /* URLSessionFake.swift in Sources */ = {isa = PBXBuildFile; fileRef = D573EC3B2912C8B300421D0B /* URLSessionFake.swift */; };
+		D576CBEB291967F400563963 /* TranslateFailJson.json in Resources */ = {isa = PBXBuildFile; fileRef = D576CBE9291950D100563963 /* TranslateFailJson.json */; };
 		D591AB8D291413B900E984F3 /* ExchangeRateOpertionalJson.json in Resources */ = {isa = PBXBuildFile; fileRef = D591AB8C291413B900E984F3 /* ExchangeRateOpertionalJson.json */; };
 		D591AB8F2914221100E984F3 /* ExchangeRateFailJson.json in Resources */ = {isa = PBXBuildFile; fileRef = D591AB8E2914221100E984F3 /* ExchangeRateFailJson.json */; };
 		D598516028F8401300E03417 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D598515F28F8401300E03417 /* NetworkService.swift */; };
@@ -57,6 +58,8 @@
 		D552906F28A3E5A100AAA663 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D552907928A3EC9600AAA663 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		D573EC3B2912C8B300421D0B /* URLSessionFake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionFake.swift; sourceTree = "<group>"; };
+		D576CBE8291950AC00563963 /* TranslateOperationalJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = TranslateOperationalJson.json; sourceTree = "<group>"; };
+		D576CBE9291950D100563963 /* TranslateFailJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = TranslateFailJson.json; sourceTree = "<group>"; };
 		D591AB8C291413B900E984F3 /* ExchangeRateOpertionalJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ExchangeRateOpertionalJson.json; sourceTree = "<group>"; };
 		D591AB8E2914221100E984F3 /* ExchangeRateFailJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ExchangeRateFailJson.json; sourceTree = "<group>"; };
 		D598515F28F8401300E03417 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
@@ -212,6 +215,8 @@
 			isa = PBXGroup;
 			children = (
 				D598A81628E75133008B2DB3 /* TranslateTests.swift */,
+				D576CBE8291950AC00563963 /* TranslateOperationalJson.json */,
+				D576CBE9291950D100563963 /* TranslateFailJson.json */,
 			);
 			path = Translate;
 			sourceTree = "<group>";
@@ -323,6 +328,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D576CBEB291967F400563963 /* TranslateFailJson.json in Resources */,
 				D591AB8F2914221100E984F3 /* ExchangeRateFailJson.json in Resources */,
 				D591AB8D291413B900E984F3 /* ExchangeRateOpertionalJson.json in Resources */,
 			);

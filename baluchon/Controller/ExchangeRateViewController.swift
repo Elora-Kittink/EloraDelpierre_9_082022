@@ -51,6 +51,8 @@ class ExchangeViewController: UIViewController {
         //        self.exchangeRateService.fetchExchangeRate(amount: upTextField.text,
         //                                       from: fromCurrency,
         //                                                   to: toCurrency)
+//        MARK: -   VIRER CETTE LOGIQUE DE LA VUE, utiliser le delegate?
+    
         self.exchangeRateService.fetchExchangeRate(amount: upTextField.text, from: fromCurrency, to: toCurrency) { result in
             DispatchQueue.main.async {
                 switch result {
