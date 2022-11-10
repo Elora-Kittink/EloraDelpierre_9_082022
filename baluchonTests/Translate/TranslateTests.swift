@@ -11,6 +11,7 @@ import XCTest
 class TransalteTest: XCTestCase {
     private func readLocalFile(forRessource: String) -> Data? {
             guard
+//        bien penser à cocher la case "baluchonTests" dans la Target Membership et ne pas mettre Bundle.Main qui est le bundle de baluchon
                 let bundle = Bundle(identifier: "ExomindOpenclassrooms.baluchonTests"),
                 let bundlePath = bundle
                 .path(forResource: forRessource,

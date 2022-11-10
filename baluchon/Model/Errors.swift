@@ -13,7 +13,8 @@ enum GlobalError: LocalizedError {
          urlApiNotCreated,
          dataNotFound,
          invalidAmount,
-         invalidRequest
+         invalidRequest,
+         cityNotEncoding
     
     var errorDescription: String? {
         switch self {
@@ -27,6 +28,8 @@ enum GlobalError: LocalizedError {
             return "Montant invalide"
         case .invalidRequest:
             return "Requete invalide"
+        case .cityNotEncoding:
+            return "City not recongnized"
         }
     }
 }

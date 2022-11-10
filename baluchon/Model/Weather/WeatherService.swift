@@ -8,19 +8,6 @@
 
 import Foundation
 
-// specific weather error
-enum WeatherError: LocalizedError {
-    
-    case cityNotEncoding
-    
-    var errorDescription: String? {
-        switch self {
-        case .cityNotEncoding:
-            return "City not recongnized"
-        }
-    }
-}
-
 // MARK: - Protocol
 
 protocol WeatherServiceDelegate: AnyObject {
@@ -33,79 +20,45 @@ protocol WeatherServiceDelegate: AnyObject {
 
 class WeatherService {
     
-    private weak var delegate: WeatherServiceDelegate!
-    private var service: NetworkService!
+//    private weak var delegate: WeatherServiceDelegate!
+//    private var service: NetworkService!
+    private var task: URLSessionDataTask?
+    private var session: URLSession
+    private var resourceUrl: URL?
     
-    init(delegate: WeatherServiceDelegate, service: NetworkService) {
-        self.delegate = delegate
+    init(session: URLSession = URLSession(configuration: .default)) {
+//        self.delegate = delegate
+        self.session = session
     }
     
 //    function taking all the cities and then pass them one by one for the fetch
     
-    func fetchForCities(cities: [String]) {
-        var result: [WeatherStruct?] = []
+    func fetchForCities(cities: [String], completion: @escaping (Result<[WeatherStruct], Error>) -> Void) {
+        var resultArray: [WeatherStruct?] = []
         
         cities.forEach { city in
-            self.fetchonecity(forCity: city) { response, error in
-                if let error = error {
-                    print("🥹 Error: \(error.localizedDescription)")
+            self.fetchOneCity(forCity: city) { result in
+                switch result {
+                case .failure(let error):
+                    completion(.failure(error))
+                    
+                case .success(let result):
+                    resultArray.append(result)
                 }
-                
-                result.append(response)
-                
 //                compactMap throw aways nil results
-                if result.count == cities.count {
-                    let realResult = result.compactMap { data in
+                if resultArray.count == cities.count {
+                    let realResult = resultArray.compactMap { data in
                         return data
                     }
-                    self.delegate.didFinish(result: realResult)
+                    completion(.success(realResult))
+//                    self.delegate.didFinish(result: realResult)
                 }
             }
         }
     }
     
     
-    private func fetchonecity(forCity: String, dataFetched: @escaping (WeatherStruct?, Error?) -> Void) {
-        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "Weather_API_KEY") as? String else {
-            dataFetched(nil, GlobalError.apiKeyNotFound)
-            return
-        }
-//      in order to accept cities whith white space in name
-        guard let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        else {
-            dataFetched(nil, WeatherError.cityNotEncoding)
-            return
-        }
-        
-        guard  let apiUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric&q=\(city)") else {
-            self.delegate.didFail(error: GlobalError.urlApiNotCreated)
-            return
-        }
-        let request = URLRequest(url: apiUrl)
-        
-        self.service.launchAPICall(url: request, expectingReturnType: WeatherStruct.self, completion: { result in
-            switch result {
-            case .success(let weather):
-//                ICI AUSSI RETURN RESULT COMME CA ON PEUT LE TESTER EN + DE L'ENVOYER AU DELEGATE?
-                dataFetched(weather, nil)
-            case .failure(let error):
-                dataFetched(nil, error)
-            }
-            
-        })
-    }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//
-////    fetch data accepting one citie
-//    private func fetchOneCity(forCity: String, dataFetched: @escaping (WeatherStruct?, Error?) -> Void) {
+//    private func fetchonecity(forCity: String, dataFetched: @escaping (WeatherStruct?, Error?) -> Void) {
 //        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "Weather_API_KEY") as? String else {
 //            dataFetched(nil, GlobalError.apiKeyNotFound)
 //            return
@@ -117,32 +70,61 @@ class WeatherService {
 //            return
 //        }
 //
-//        guard let apiUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric&q=\(city)")
-//        else {
-//            dataFetched(nil, GlobalError.urlApiNotCreated)
+//        guard  let apiUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric&q=\(city)") else {
+//            self.delegate.didFail(error: GlobalError.urlApiNotCreated)
 //            return
 //        }
+//        let request = URLRequest(url: apiUrl)
 //
-//        let task = URLSession.shared.dataTask(with: apiUrl) { data, response, error in
-//            if let error = error {
-//                dataFetched(nil, error)
-//                return
-//            }
-//
-//          guard let data = data else {
-//              dataFetched(nil, GlobalError.dataNotFound)
-//              return
-//          }
-//
-//            do {
-//                let responseJSON = try JSONDecoder().decode(WeatherStruct.self,
-//                                                            from: data)
-//                dataFetched(responseJSON, nil)
-//            } catch {
+//        self.service.launchAPICall(url: request, expectingReturnType: WeatherStruct.self, completion: { result in
+//            switch result {
+//            case .success(let weather):
+////                ICI AUSSI RETURN RESULT COMME CA ON PEUT LE TESTER EN + DE L'ENVOYER AU DELEGATE?
+//                dataFetched(weather, nil)
+//            case .failure(let error):
 //                dataFetched(nil, error)
 //            }
-//        }
 //
-//        task.resume()
+//        })
 //    }
+
+//    fetch data accepting one citie
+    private func fetchOneCity(forCity: String, completion: @escaping (Result<WeatherStruct, Error>) -> Void) {
+        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "Weather_API_KEY") as? String else {
+            completion(.failure(GlobalError.apiKeyNotFound))
+            return
+        }
+//      in order to accept cities whith white space in name
+        guard let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+        else {
+            completion(.failure(GlobalError.cityNotEncoding))
+            return
+        }
+
+        guard let apiUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric&q=\(city)")
+        else {
+            completion(.failure(GlobalError.urlApiNotCreated))
+            return
+        }
+
+        let task = session.dataTask(with: apiUrl) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+          guard let data = data else {
+              completion(.failure(GlobalError.dataNotFound))
+              return
+          }
+            do {
+                let responseJSON = try JSONDecoder().decode(WeatherStruct.self,
+                                                            from: data)
+                completion(.success(responseJSON))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
 }

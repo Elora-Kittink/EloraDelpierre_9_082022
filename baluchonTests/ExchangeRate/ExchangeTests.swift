@@ -17,21 +17,22 @@ import XCTest
 class ExchangeTests: XCTestCase {
     
     private func readLocalFile(forRessource: String) -> Data? {
-            guard
-                let bundle = Bundle(identifier: "ExomindOpenclassrooms.baluchonTests"),
-                let bundlePath = bundle
+        guard
+//     bien penser à cocher la case "baluchonTests" dans la Target Membership et ne pas mettre Bundle.Main qui est le bundle de baluchon
+            let bundle = Bundle(identifier: "ExomindOpenclassrooms.baluchonTests"),
+            let bundlePath = bundle
                 .path(forResource: forRessource,
                       ofType: "json"),
-                let jsonData = try? String(contentsOfFile: bundlePath).data(using: .utf8)
-            else {
-                return nil
-            }
+            let jsonData = try? String(contentsOfFile: bundlePath).data(using: .utf8)
+        else {
+            return nil
+        }
         
-            return jsonData
+        return jsonData
     }
-
+    
     func testPasDeData() {
-
+        
         let exchangeRateService = ExchangeRateService(session: URLSessionFake(data: nil, error: nil))
         
         exchangeRateService.fetchExchangeRate(amount: "10",
@@ -82,7 +83,7 @@ class ExchangeTests: XCTestCase {
     }
     
     func testDecodeFail() {
-//        https://programmingwithswift.com/parse-json-from-file-and-url-with-swift/
+        //        https://programmingwithswift.com/parse-json-from-file-and-url-with-swift/
         let data = readLocalFile(forRessource: "ExchangeRateFailJson")
         
         struct MyError: Error { }

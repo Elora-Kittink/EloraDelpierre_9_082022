@@ -18,34 +18,44 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.weatherService = WeatherService(delegate: self,
-                                             service: NetworkService())
+        self.weatherService = WeatherService()
+//        self.weatherService = WeatherService(delegate: self,
+//                                             service: NetworkService())
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.weatherService.fetchForCities(cities: ["Paris", "New York", "Berlin", "La Rochelle"])
+        self.weatherService.fetchForCities(cities: ["Paris", "New York", "Berlin", "La Rochelle"]) { result in
+            switch result {
+            case .failure:
+                print("🥹 Error")
+            case .success(let result):
+                self.data = result
+                DispatchQueue.main.async {
+                    self.weatherTableView.reloadData()
+                }
+            }
+        }
+//        self.weatherService.fetchForCities(cities: ["Paris", "New York", "Berlin", "La Rochelle"])
     }
 }
 
 // MARK: - WeatherServiceDelegate
-extension WeatherViewController: WeatherServiceDelegate {
-    func didFail(error: Error) {
-        print("☠️ error type : \(error)")
-    }
-    
-    
-    func didFinish(result: [WeatherStruct]) {
-        self.data = result
-        
-        DispatchQueue.main.async {
-            self.weatherTableView.reloadData()
-        }
-    }
-    
-}
+//extension WeatherViewController: WeatherServiceDelegate {
+//    func didFail(error: Error) {
+//        print("☠️ error type : \(error)")
+//    }
+//
+//
+//    func didFinish(result: [WeatherStruct]) {
+//        self.data = result
+//
+//        DispatchQueue.main.async {
+//            self.weatherTableView.reloadData()
+//        }
+//    }
+//
+//}
 
 class MeteoCell: UITableViewCell {
 

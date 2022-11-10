@@ -21,7 +21,7 @@ class TranslateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         spiner.hidesWhenStopped = true
-        self.translateService = TranslateService()
+        self.translateService = TranslateService(delegate: self)
         
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(title: "Valider",
@@ -67,21 +67,21 @@ class TranslateViewController: UIViewController {
     @IBAction private func launchTranslation() {
         spiner.startAnimating()
         self.translateBtn.isEnabled = false
-        self.translateService.getTranslation(for: UpTextView.text, from: self.fromLangage, to: self.toLangage) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure:
-                    print("🥹 Error")
-                case .success(let translation):
-                    self.DownTextView.text = translation
-                    self.spiner.stopAnimating()
-                    self.translateBtn.isEnabled = true
-                }
-            }
-        }
-//        self.translateService.getTranslation(for: UpTextView.text,
-//                                             from: self.fromLangage,
-//                                             to: self.toLangage)
+//        self.translateService.getTranslation(for: UpTextView.text, from: self.fromLangage, to: self.toLangage) { result in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .failure:
+//                    print("🥹 Error")
+//                case .success(let translation):
+//                    self.DownTextView.text = translation
+//                    self.spiner.stopAnimating()
+//                    self.translateBtn.isEnabled = true
+//                }
+//            }
+//        }
+        self.translateService.gettranslation(for: UpTextView.text,
+                                             from: self.fromLangage,
+                                             to: self.toLangage)
     }
 
     
@@ -115,5 +115,4 @@ extension TranslateViewController: TranslateServiceDelegate {
 //    func updateDownLabel(result: String) {
 //        DownLabel.text = result
 //    }
-//
 //}

@@ -22,6 +22,7 @@
 		D576CBEB291967F400563963 /* TranslateFailJson.json in Resources */ = {isa = PBXBuildFile; fileRef = D576CBE9291950D100563963 /* TranslateFailJson.json */; };
 		D591AB8D291413B900E984F3 /* ExchangeRateOpertionalJson.json in Resources */ = {isa = PBXBuildFile; fileRef = D591AB8C291413B900E984F3 /* ExchangeRateOpertionalJson.json */; };
 		D591AB8F2914221100E984F3 /* ExchangeRateFailJson.json in Resources */ = {isa = PBXBuildFile; fileRef = D591AB8E2914221100E984F3 /* ExchangeRateFailJson.json */; };
+		D5946BF0291BEE7400A3E083 /* WeatherFailJson.json in Resources */ = {isa = PBXBuildFile; fileRef = D5946BEF291BEE7400A3E083 /* WeatherFailJson.json */; };
 		D598516028F8401300E03417 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D598515F28F8401300E03417 /* NetworkService.swift */; };
 		D598A81328E750FD008B2DB3 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D598A81228E750FD008B2DB3 /* WeatherTests.swift */; };
 		D598A81528E75117008B2DB3 /* ExchangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D598A81428E75117008B2DB3 /* ExchangeTests.swift */; };
@@ -62,6 +63,7 @@
 		D576CBE9291950D100563963 /* TranslateFailJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = TranslateFailJson.json; sourceTree = "<group>"; };
 		D591AB8C291413B900E984F3 /* ExchangeRateOpertionalJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ExchangeRateOpertionalJson.json; sourceTree = "<group>"; };
 		D591AB8E2914221100E984F3 /* ExchangeRateFailJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = ExchangeRateFailJson.json; sourceTree = "<group>"; };
+		D5946BEF291BEE7400A3E083 /* WeatherFailJson.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = WeatherFailJson.json; sourceTree = "<group>"; };
 		D598515F28F8401300E03417 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		D598A80928E7506C008B2DB3 /* baluchonTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = baluchonTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D598A81228E750FD008B2DB3 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
@@ -197,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				D598A81228E750FD008B2DB3 /* WeatherTests.swift */,
+				D5946BEF291BEE7400A3E083 /* WeatherFailJson.json */,
 			);
 			path = Weather;
 			sourceTree = "<group>";
@@ -330,6 +333,7 @@
 			files = (
 				D576CBEB291967F400563963 /* TranslateFailJson.json in Resources */,
 				D591AB8F2914221100E984F3 /* ExchangeRateFailJson.json in Resources */,
+				D5946BF0291BEE7400A3E083 /* WeatherFailJson.json in Resources */,
 				D591AB8D291413B900E984F3 /* ExchangeRateOpertionalJson.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

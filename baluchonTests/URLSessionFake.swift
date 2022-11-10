@@ -47,7 +47,8 @@ class URLSessionDataTaskFake: URLSessionDataTask {
     var data: Data?
     var urlResponse: URLResponse?
     var responseError: Error?
-
+// https://medium.com/@valsamiselmaliotis/mock-a-network-call-in-swift-6553ecdd3b81
+    
     init(data: Data?, urlResponse: URLResponse?, responseError: Error?, completionHandler: ((Data?, URLResponse?, Error?) -> Void)?) {
         self.completionHandler = completionHandler
         self.data = data
