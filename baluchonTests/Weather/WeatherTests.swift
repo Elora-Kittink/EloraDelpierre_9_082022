@@ -10,10 +10,7 @@ import XCTest
 
 
 class WeatherTests: XCTestCase {
-// tester le numéro de réponse de l'API?
-// tester la clé API
-// tester qu'on ait bien une ville
-//
+
     private func readLocalFile(forRessource: String) -> Data? {
             guard
 //        bien penser à cocher la case "baluchonTests" dans la Target Membership et ne pas mettre Bundle.Main qui est le bundle de baluchon

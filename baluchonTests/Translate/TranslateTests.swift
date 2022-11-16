@@ -9,6 +9,9 @@ import XCTest
 @testable import baluchon
 
 class TransalteTest: XCTestCase {
+    
+    weak var delegate: TranslateServiceDelegate!
+    
     private func readLocalFile(forRessource: String) -> Data? {
             guard
 //        bien penser à cocher la case "baluchonTests" dans la Target Membership et ne pas mettre Bundle.Main qui est le bundle de baluchon
@@ -50,7 +53,6 @@ class TransalteTest: XCTestCase {
     }
     
     func testDecodingError() {
-        struct MyError: Error { }
         let data = readLocalFile(forRessource: "TranslateFailJson")
         let translateService = TranslateService(session: URLSessionFake(data: data, error: nil))
         translateService.getTranslation(for: "Bonjour", from: "FR", to: "EN") { result in
