@@ -32,6 +32,8 @@
 		D5A698B328C5EA1400019E00 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A698B228C5EA1400019E00 /* WeatherService.swift */; };
 		D5A698B528C5EA4300019E00 /* WeatherStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A698B428C5EA4300019E00 /* WeatherStruct.swift */; };
 		D5A698B728C6380D00019E00 /* TranslateStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A698B628C6380D00019E00 /* TranslateStruct.swift */; };
+		D5AAD255292648EC0079CA94 /* NetworkServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A51A41292524D9009AAA96 /* NetworkServiceMock.swift */; };
+		D5AAD257292678F80079CA94 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAD256292678F80079CA94 /* NetworkServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,9 +74,11 @@
 		D59A749D28BF56A1004F9F8E /* ApiKeys.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ApiKeys.xcconfig; sourceTree = "<group>"; };
 		D59A749E28BF9C14004F9F8E /* TranslateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateService.swift; sourceTree = "<group>"; };
 		D5A4EF9928F9665F007D066D /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		D5A51A41292524D9009AAA96 /* NetworkServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceMock.swift; sourceTree = "<group>"; };
 		D5A698B228C5EA1400019E00 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		D5A698B428C5EA4300019E00 /* WeatherStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStruct.swift; sourceTree = "<group>"; };
 		D5A698B628C6380D00019E00 /* TranslateStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateStruct.swift; sourceTree = "<group>"; };
+		D5AAD256292678F80079CA94 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +166,7 @@
 				D573EC342912C76E00421D0B /* Transalte */,
 				D573EC332912C75400421D0B /* ExchangeRate */,
 				D598515F28F8401300E03417 /* NetworkService.swift */,
+				D5A51A41292524D9009AAA96 /* NetworkServiceMock.swift */,
 				D5A4EF9928F9665F007D066D /* Errors.swift */,
 			);
 			path = Model;
@@ -231,6 +236,7 @@
 				D573EC372912C83200421D0B /* ExchangeRate */,
 				D573EC362912C82400421D0B /* Weather */,
 				D573EC3B2912C8B300421D0B /* URLSessionFake.swift */,
+				D5AAD256292678F80079CA94 /* NetworkServiceTests.swift */,
 			);
 			path = baluchonTests;
 			sourceTree = "<group>";
@@ -350,6 +356,7 @@
 				D59A749F28BF9C14004F9F8E /* TranslateService.swift in Sources */,
 				D552907A28A3EC9600AAA663 /* Weather.swift in Sources */,
 				D552906628A3E59E00AAA663 /* ExchangeRateViewController.swift in Sources */,
+				D5AAD255292648EC0079CA94 /* NetworkServiceMock.swift in Sources */,
 				D532340B28B76E4D00E22F1F /* ExchangeRateStruct.swift in Sources */,
 				D5A4EF9A28F9665F007D066D /* Errors.swift in Sources */,
 				D552906228A3E59E00AAA663 /* AppDelegate.swift in Sources */,
@@ -366,6 +373,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5AAD257292678F80079CA94 /* NetworkServiceTests.swift in Sources */,
 				D598A81528E75117008B2DB3 /* ExchangeTests.swift in Sources */,
 				D598A81328E750FD008B2DB3 /* WeatherTests.swift in Sources */,
 				D573EC3C2912C8B300421D0B /* URLSessionFake.swift in Sources */,

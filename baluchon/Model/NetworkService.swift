@@ -8,10 +8,9 @@ import Foundation
 
 class NetworkService {
     
-    private var session: URLSession
-    static let shared = NetworkService()
+    private var session: URLSessionProtocol
 
-    init(session: URLSession = URLSession(configuration: .default)) {
+    init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
     }
     
@@ -19,20 +18,16 @@ class NetworkService {
 
         let task = session.dataTask(with: url, completionHandler: { data, _, error in
             guard let data = data , error == nil else {
+                completion(.failure(GlobalError.dataNotFound))
                 return
             }
-            var decodedResult: T?
             do {
-                decodedResult = try JSONDecoder().decode(T.self, from: data)
-            }
-            catch {
+                let decodedResult = try JSONDecoder().decode(T.self, from: data)
+                completion(.success(decodedResult))
+            } catch {
+                completion(.failure(error))
                 print("decoding error : ☠️\(error)")
             }
-            guard let result = decodedResult else {
-                print("result error : ☠️\(String(describing: error))")
-                return
-            }
-            completion(.success(result))
         })
         task.resume()
     }
