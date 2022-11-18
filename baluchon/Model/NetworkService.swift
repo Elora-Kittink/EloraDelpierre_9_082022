@@ -8,15 +8,16 @@ import Foundation
 
 class NetworkService {
     
+// session conforme au protocol où DataTask renvoie un URLSessionDataTaskProtocol
     private var session: URLSessionProtocol
 
     init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
     }
     
-    public func launchAPICall<T: Decodable>(url: URLRequest, expectingReturnType: T.Type, completion: @escaping ((Result<T, Error>) -> Void)) {
+    public func launchAPICall<T: Decodable>(urlRequest: URLRequest, expectingReturnType: T.Type, completion: @escaping ((Result<T, Error>) -> Void)) {
 
-        let task = session.dataTask(with: url, completionHandler: { data, _, error in
+        let task = session.dataTask(with: urlRequest, completionHandler: { data, _, error in
             guard let data = data , error == nil else {
                 completion(.failure(GlobalError.dataNotFound))
                 return

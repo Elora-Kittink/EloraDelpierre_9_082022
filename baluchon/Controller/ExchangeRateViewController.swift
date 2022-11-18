@@ -23,12 +23,13 @@ class ExchangeViewController: UIViewController {
     private var fromCurrency: String = "USD"
     private var toCurrency: String = "EUR"
     private var usdToEur: Bool = true
+    private let networkService = NetworkService()
     
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         spiner.hidesWhenStopped = true
-        self.exchangeRateService = ExchangeRateService()
+        self.exchangeRateService = ExchangeRateService(delegate: self)
         
         self.upTextField.delegate = self
         
@@ -53,18 +54,7 @@ class ExchangeViewController: UIViewController {
         //                                                   to: toCurrency)
 //        MARK: -   VIRER CETTE LOGIQUE DE LA VUE, utiliser le delegate?
     
-        self.exchangeRateService.fetchExchangeRate(amount: upTextField.text, from: fromCurrency, to: toCurrency) { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure:
-                    print("🥹 Error")
-                case .success(let changeRate):
-                    self.downTextField.text = "\(changeRate)"
-                    self.spiner.stopAnimating()
-                    self.launchButton.isEnabled = true
-                }
-            }
-        }
+        self.exchangeRateService.fetchExangeRate(amount: upTextField.text, from: fromCurrency, to: toCurrency, networkService: networkService)
     }
     
     @IBAction private func toggleCurrency() {

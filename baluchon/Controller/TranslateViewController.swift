@@ -23,7 +23,6 @@ class TranslateViewController: UIViewController {
         super.viewDidLoad()
         spiner.hidesWhenStopped = true
         self.translateService = TranslateService(delegate: self)
-        //        self.translateService = TranslateService()
         
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(title: "Valider",

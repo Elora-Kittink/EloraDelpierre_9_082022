@@ -20,111 +20,72 @@ protocol WeatherServiceDelegate: AnyObject {
 
 class WeatherService {
     
-//    private weak var delegate: WeatherServiceDelegate!
-//    private var service: NetworkService!
-    private var task: URLSessionDataTask?
-    private var session: URLSession
-    private var resourceUrl: URL?
+    private weak var delegate: WeatherServiceDelegate!
     
-    init(session: URLSession = URLSession(configuration: .default)) {
-//        self.delegate = delegate
-        self.session = session
+    init(delegate: WeatherServiceDelegate) {
+        self.delegate = delegate
     }
     
-//    function taking all the cities and then pass them one by one for the fetch
+    //    function taking all the cities and then pass them one by one for the fetch
     
-    func fetchForCities(cities: [String], completion: @escaping (Result<[WeatherStruct], Error>) -> Void) {
+    func fetchForCities(cities: [String], networkService: NetworkService) {
         var resultArray: [WeatherStruct?] = []
         
         cities.forEach { city in
-            self.fetchOneCity(forCity: city) { result in
+            self.fetchOneCity(forCity: city, networkService: networkService) { result in
                 switch result {
-                case .failure(let error):
-                    completion(.failure(error))
-                    
                 case .success(let result):
                     resultArray.append(result)
+                case .failure(let error):
+                    self.delegate.didFail(error: error)
                 }
-//                compactMap throw aways nil results
+                //                compactMap throw aways nil results
                 if resultArray.count == cities.count {
                     let realResult = resultArray.compactMap { data in
                         return data
                     }
-                    completion(.success(realResult))
-//                    self.delegate.didFinish(result: realResult)
+                    self.delegate.didFinish(result: realResult)
                 }
             }
         }
     }
     
+    //    (WeatherStruct?, Error?)
+    private func fetchOneCity(forCity: String, networkService: NetworkService, completion: @escaping (Result<WeatherStruct, Error>) -> Void) {
+        
+        let apiUrl = createUrl(forCity: forCity)
+        let request = URLRequest(url: apiUrl)
+        
+        networkService.launchAPICall(urlRequest: request, expectingReturnType: WeatherStruct.self, completion: { result in
+            switch result {
+            case .success(let weather):
+                completion(.success(weather))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+            
+        })
+    }
     
-//    private func fetchonecity(forCity: String, dataFetched: @escaping (WeatherStruct?, Error?) -> Void) {
-//        guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "Weather_API_KEY") as? String else {
-//            dataFetched(nil, GlobalError.apiKeyNotFound)
-//            return
-//        }
-////      in order to accept cities whith white space in name
-//        guard let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-//        else {
-//            dataFetched(nil, WeatherError.cityNotEncoding)
-//            return
-//        }
-//
-//        guard  let apiUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric&q=\(city)") else {
-//            self.delegate.didFail(error: GlobalError.urlApiNotCreated)
-//            return
-//        }
-//        let request = URLRequest(url: apiUrl)
-//
-//        self.service.launchAPICall(url: request, expectingReturnType: WeatherStruct.self, completion: { result in
-//            switch result {
-//            case .success(let weather):
-////                ICI AUSSI RETURN RESULT COMME CA ON PEUT LE TESTER EN + DE L'ENVOYER AU DELEGATE?
-//                dataFetched(weather, nil)
-//            case .failure(let error):
-//                dataFetched(nil, error)
-//            }
-//
-//        })
-//    }
-
-//    fetch data accepting one citie
-    private func fetchOneCity(forCity: String, completion: @escaping (Result<WeatherStruct, Error>) -> Void) {
+    func createUrl(forCity: String) -> URL{
+        
         guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "Weather_API_KEY") as? String else {
-            completion(.failure(GlobalError.apiKeyNotFound))
-            return
+            
+            self.delegate.didFail(error: GlobalError.apiKeyNotFound)
+            return URL(string: "fail")!
         }
-//      in order to accept cities whith white space in name
+        //      in order to accept cities whith white space in name
         guard let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         else {
-            completion(.failure(GlobalError.cityNotEncoding))
-            return
+            
+            self.delegate.didFail(error: GlobalError.cityNotEncoding)
+            return URL(string: "fail")!
         }
-
-        guard let apiUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric&q=\(city)")
-        else {
-            completion(.failure(GlobalError.urlApiNotCreated))
-            return
+        
+        guard  let apiUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric&q=\(city)") else {
+            self.delegate.didFail(error: GlobalError.urlApiNotCreated)
+            return URL(string: "fail")!
         }
-
-        let task = session.dataTask(with: apiUrl) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-
-          guard let data = data else {
-              completion(.failure(GlobalError.dataNotFound))
-              return
-          }
-            do {
-                let responseJSON = try JSONDecoder().decode(WeatherStruct.self,
-                                                            from: data)
-                completion(.success(responseJSON))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-        task.resume()
+        return apiUrl
     }
 }
