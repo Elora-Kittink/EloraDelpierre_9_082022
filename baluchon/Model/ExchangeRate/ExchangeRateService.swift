@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol ExchangeRateServiceDelegate: AnyObject {
-
+    
     func didFinish(result: Float, from: String)
     func didFail(error: Error)
 }
@@ -17,16 +17,18 @@ protocol ExchangeRateServiceDelegate: AnyObject {
 class ExchangeRateService {
     
     weak var delegate: ExchangeRateServiceDelegate!
-
+    
     init(delegate: ExchangeRateServiceDelegate) {
         self.delegate = delegate
     }
-
+    
     func fetchExangeRate(amount: String?, from: String, to: String, networkService: NetworkService) {
-
-        let apiUrl = createUrl(amount: amount, from: from, to: to)
+        
+        guard let apiUrl = createUrl(amount: amount, from: from, to: to) else {
+            return
+        }
         let request = URLRequest(url: apiUrl)
-
+        
         networkService.launchAPICall(urlRequest: request, expectingReturnType: ExchangeRateStruct.self, completion: { result in
             switch result {
             case .success(let rate):
@@ -37,24 +39,24 @@ class ExchangeRateService {
         })
     }
     
-    func createUrl(amount: String?, from: String, to: String) -> URL {
+    func createUrl(amount: String?, from: String, to: String) -> URL? {
         
         guard let amount = amount,
               let floatAmount = Float(amount)
         else {
             self.delegate.didFail(error: GlobalError.incorrecInputEntries)
-            return URL(string: "fail")!
+            return nil
         }
-
+        
         guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "Exchange_Rate_API_KEY") as? String else {
             self.delegate.didFail(error: GlobalError.apiKeyNotFound)
-            return URL(string: "fail")!
+            return nil
         }
-
+        
         guard let apiUrl = URL(string: "https://api.apilayer.com/fixer/convert?to=\(to)&from=\(from)&amount=\(floatAmount)&apikey=\(apiKey)")
         else {
             self.delegate.didFail(error: GlobalError.urlApiNotCreated)
-            return URL(string: "fail")!
+            return nil
         }
         return apiUrl
     }

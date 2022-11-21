@@ -9,92 +9,33 @@ import XCTest
 
 //https://medium.com/@valsamiselmaliotis/mock-a-network-call-in-swift-6553ecdd3b81
 
-class ExchangeTests: XCTestCase {
-
-
-
-    func testPasDeData() {
-
-        let exchangeRateService = ExchangeRateService(session: URLSessionFake(data: nil, error: nil))
-
-        exchangeRateService.fetchExchangeRate(amount: "10",
-                                              from: "EUR",
-                                              to: "USD") { result in
-            switch result {
-            case .success:
-                break
-            case .failure(let error):
-                XCTAssertEqual(error as? GlobalError, GlobalError.dataNotFound)
-            }
-        }
+class ExchangeTests: XCTestCase, ExchangeRateServiceDelegate {
+    var error: GlobalError?
+    func didFinish(result: Float, from: String) { }
+    
+    func didFail(error: Error) {
+        self.error = error as? GlobalError
     }
+    
+    func testUrlError() {
+        let exchangeRateService = ExchangeRateService(delegate: self)
 
-    func testUneErreurDuWS() {
-
-        struct MyError: Error { }
-
-        // Given
-        let exchangeRateService = ExchangeRateService(session: URLSessionFake(data: nil, error: MyError()))
-
-
-        // When
-        exchangeRateService.fetchExchangeRate(amount: "10",
-                                              from: "EUR",
-                                              to: "USD") { result in
-            switch result {
-            case .success:
-                break
-
-            case .failure(let error):
-                XCTAssertTrue(error is MyError)
-            }
-        }
+        let _ = exchangeRateService.fetchExangeRate(amount: "1", from: "USD", to: " ", networkService: NetworkService())
+        
+        XCTAssertEqual(self.error, GlobalError.urlApiNotCreated)
     }
+    
+    func testUrlAmoutNil() {
+        let exchangeRateService = ExchangeRateService(delegate: self)
 
-    func testAmountNil() {
-        let exchangeRateService = ExchangeRateService(session: URLSessionFake(data: nil, error: nil))
-
-        exchangeRateService.fetchExchangeRate(amount: nil, from: "EUR", to: "USD") { result in
-            switch result {
-            case .success:
-                break
-            case .failure(let error):
-                XCTAssertEqual(error as? GlobalError, GlobalError.invalidAmount)
-            }
-        }
+        let _ = exchangeRateService.fetchExangeRate(amount: nil, from: "USD", to: "EUR", networkService: NetworkService())
+        
+        XCTAssertEqual(self.error, GlobalError.incorrecInputEntries)
     }
-
-    func testDecodeFail() {
-        //        https://programmingwithswift.com/parse-json-from-file-and-url-with-swift/
-        let data = readLocalFile(forRessource: "ExchangeRateFailJson")
-
-        struct MyError: Error { }
-        let exchangeRateService = ExchangeRateService(session: URLSessionFake(
-            data: data,
-            error: nil))
-
-        exchangeRateService.fetchExchangeRate(amount:"12", from: "EUR", to: "USD") { result in
-            switch result {
-
-            case .success:
-                break
-
-            case .failure(let error):
-                XCTAssertTrue(error is DecodingError)
-            }
-        }
-    }
-
-    func testUrlPasBonne() {
-        let exchangeRateService = ExchangeRateService(session: URLSessionFake(data: nil, error: nil))
-
-        exchangeRateService.fetchExchangeRate(amount: "1", from: "  ", to: "USD") { result in
-            switch result {
-            case .success:
-                break
-            case .failure(let error):
-                XCTAssertEqual(error as? GlobalError, GlobalError.urlApiNotCreated)
-            }
-        }
+    
+    func testUrlSucces() {
+        let exchangeRateService = ExchangeRateService(delegate: self)
+        let urlTest = exchangeRateService.createUrl(amount: "45.8399", from: "USD", to: "EUR")
+        XCTAssertEqual(urlTest, URL(string: "https://api.apilayer.com/fixer/convert?to=EUR&from=USD&amount=45.8399&apikey=Q7TgOKQMjvKgtASDohRF9LiMrOcG2thG"))
     }
 }

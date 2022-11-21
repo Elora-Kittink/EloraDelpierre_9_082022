@@ -25,7 +25,7 @@ final class TranslateServiceTests: XCTestCase, TranslateServiceDelegate {
         XCTAssertEqual(self.error, GlobalError.urlApiNotCreated)
         
     }
-    func testUrl() {
+    func testUrlSucces() {
         let translateService = TranslateService(delegate: self)
         let urlTest = translateService.createApiUrl(queryText: "Test unitaire numéro 2", source: "fr", target: "en")
         XCTAssertEqual(urlTest, URL(string: "https://translation.googleapis.com/language/translate/v2?key=AIzaSyBvSyMDb8OQO5su-AImC2WzclGPsyNKKYI&format=text&q=Test%20unitaire%20num%C3%A9ro%202&target=en&source=fr"))
