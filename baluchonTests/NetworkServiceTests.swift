@@ -18,9 +18,9 @@ final class NetworkServiceTests: XCTestCase {
                       ofType: "json"),
                 let jsonData = try? String(contentsOfFile: bundlePath).data(using: .utf8)
             else {
+                print("🤡")
                 return nil
             }
-        
             return jsonData
     }
     
@@ -28,19 +28,21 @@ final class NetworkServiceTests: XCTestCase {
                             andStatusCode code: Int,
                             andError error: Error?) -> MockURLSession? {
 
-        let data = readLocalFile(forRessource: file) // faut réussir à passer ça en nil
+        let data = readLocalFile(forRessource: file)
       
         let response = HTTPURLResponse(url: URL(string: "TestUrl")!, statusCode: code, httpVersion: nil, headerFields: nil)
 
         return MockURLSession(completionHandler: (data, response, error))
     }
+    
     func testNoData() {
 //        je sais pas si ça merde a cause du data: nil ou du URL foireux
 //        data = nil pas pareil de que data = ""
-        let mockSession = createMockSession(fromJsonFile: "",
-        andStatusCode: 200, andError: nil)
-        let sut = NetworkService(session: mockSession!)
-        sut.launchAPICall(url: URLRequest(url: URL(string: "test")!), expectingReturnType: TranslateStruct.self) { result in
+        let response = HTTPURLResponse(url: URL(string: "TestUrl")!, statusCode: 200, httpVersion: nil, headerFields: nil)
+
+        let mockSession2 = MockURLSession(completionHandler: (nil, response, nil))
+        let sut = NetworkService(session: mockSession2)
+        sut.launchAPICall(urlRequest: URLRequest(url: URL(string: "test")!), expectingReturnType: TranslateStruct.self) { result in
             switch result {
             case .success:
                 break
@@ -49,20 +51,33 @@ final class NetworkServiceTests: XCTestCase {
                 XCTAssertEqual(error as? GlobalError, GlobalError.dataNotFound)
             }
         }
-
-
-
-//
-//        let networkServiceMock = NetworkService(session: URLSessionFake(data: nil, error: nil))
-//        let translateService = TranslateService(delegate: delegate)
-//        translateService.gettranslation(for: "bonjour", from: "FR", to: "EN", networkService: networkServiceMock) { result in
+    }
+    
+    func testDecodingError() {
+        let mockSession = createMockSession(fromJsonFile: "TranslateFailJson",
+                andStatusCode: 200, andError: nil)
+        let sut = NetworkService(session: mockSession!)
+        sut.launchAPICall(urlRequest: URLRequest(url: URL(string: "test")!), expectingReturnType: TranslateStruct.self) { result in
+            switch result {
+            case .success(_):
+                break
+            case .failure(let error):
+                XCTAssertTrue(error is DecodingError)
+            }
+        }
+    }
+    
+//    func testDecodingSucces() {
+//        let mockSession = createMockSession(fromJsonFile: "TranslateOperationalJson",
+//                andStatusCode: 200, andError: nil)
+//        let sut = NetworkService(session: mockSession!)
+//        sut.launchAPICall(urlRequest: URLRequest(url: URL(string: "test")!), expectingReturnType: TranslateStruct.self) { result in
 //            switch result {
-//            case .success:
+//            case .success(_):
 //                break
 //            case .failure(let error):
-//                XCTAssertEqual(error as? GlobalError, GlobalError.dataNotFound)
+//                XCTAssertTrue(error is DecodingError)
 //            }
 //        }
-    }
-
+//    }
 }

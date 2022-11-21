@@ -78,7 +78,7 @@ class WeatherService {
         guard let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         else {
             
-            self.delegate.didFail(error: GlobalError.cityNotEncoding)
+            self.delegate.didFail(error: GlobalError.incorrecInputEntries)
             return URL(string: "fail")!
         }
         

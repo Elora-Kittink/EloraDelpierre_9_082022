@@ -27,6 +27,7 @@
 		D598A81528E75117008B2DB3 /* ExchangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D598A81428E75117008B2DB3 /* ExchangeTests.swift */; };
 		D598A81728E75133008B2DB3 /* TranslateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D598A81628E75133008B2DB3 /* TranslateTests.swift */; };
 		D59A749F28BF9C14004F9F8E /* TranslateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59A749E28BF9C14004F9F8E /* TranslateService.swift */; };
+		D59E495C292BB1D000AB9CD1 /* TranslateOperationalJson.json in Resources */ = {isa = PBXBuildFile; fileRef = D576CBE8291950AC00563963 /* TranslateOperationalJson.json */; };
 		D5A4EF9A28F9665F007D066D /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A4EF9928F9665F007D066D /* Errors.swift */; };
 		D5A698B328C5EA1400019E00 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A698B228C5EA1400019E00 /* WeatherService.swift */; };
 		D5A698B528C5EA4300019E00 /* WeatherStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A698B428C5EA4300019E00 /* WeatherStruct.swift */; };
@@ -335,6 +336,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D576CBEB291967F400563963 /* TranslateFailJson.json in Resources */,
+				D59E495C292BB1D000AB9CD1 /* TranslateOperationalJson.json in Resources */,
 				D591AB8F2914221100E984F3 /* ExchangeRateFailJson.json in Resources */,
 				D5946BF0291BEE7400A3E083 /* WeatherFailJson.json in Resources */,
 				D591AB8D291413B900E984F3 /* ExchangeRateOpertionalJson.json in Resources */,

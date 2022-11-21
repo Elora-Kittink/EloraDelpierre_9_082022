@@ -42,7 +42,7 @@ class ExchangeRateService {
         guard let amount = amount,
               let floatAmount = Float(amount)
         else {
-            self.delegate.didFail(error: GlobalError.dataNotFound)
+            self.delegate.didFail(error: GlobalError.incorrecInputEntries)
             return URL(string: "fail")!
         }
 

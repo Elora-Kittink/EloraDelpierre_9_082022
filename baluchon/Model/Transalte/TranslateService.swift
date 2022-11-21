@@ -15,7 +15,7 @@ protocol TranslateServiceDelegate: AnyObject {
 class TranslateService {
     
     weak var delegate: TranslateServiceDelegate!
-
+//    static let shared = TranslateService(delegate: delegate)
     
     init(delegate: TranslateServiceDelegate) {
         self.delegate = delegate
@@ -26,8 +26,10 @@ class TranslateService {
                         from source: String,
                         to target: String, format: String = "text", networkService: NetworkService) {
 
-        let apiUrl = createApiUrl(queryText: queryText, source: source, target: target)
-        let request = URLRequest(url: apiUrl )
+        guard let apiUrl = createApiUrl(queryText: queryText, source: source, target: target) else {
+            return
+        }
+        let request = URLRequest(url: apiUrl)
 
         networkService.launchAPICall(urlRequest: request, expectingReturnType: TranslateStruct.self, completion: { result in
             switch result {
@@ -41,23 +43,25 @@ class TranslateService {
 
     func createApiUrl(queryText: String,
                       source: String,
-                       target: String) -> URL {
+                       target: String) -> URL? {
         
         guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "Translate_API_KEY") as? String
         else {
             self.delegate.didFail(error: GlobalError.apiKeyNotFound)
-            return URL(string: "fail")!
+            return nil
         }
 
         guard let queryTextPercent = queryText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
 //            on fait quoi ici si ça foire?
-            return URL(string: "fail")!
+            self.delegate.didFail(error: GlobalError.incorrecInputEntries)
+            return nil
         }
         
         guard let apiUrl = URL(string: "https://translation.googleapis.com/language/translate/v2?key=\(apiKey)&format=text&q=\(queryTextPercent)&target=\(target)&source=\(source)") else {
             self.delegate.didFail(error: GlobalError.urlApiNotCreated)
-            return URL(string: "fail")!
+            return nil
         }
         return apiUrl
     }
 }
+ 
