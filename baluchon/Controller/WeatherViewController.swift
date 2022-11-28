@@ -9,14 +9,17 @@ import UIKit
 
 class WeatherViewController: UIViewController {
 
-    // MARK: - Outlets
-    @IBOutlet weak var weatherTableView: UITableView!
-    
     // MARK: - Variables
     private var weatherService: WeatherService!
     private var data: [WeatherStruct] = []
     private let networkService = NetworkService()
     
+    // MARK: - Outlets
+    @IBOutlet weak var weatherTableView: UITableView!
+    
+
+    // MARK: - View life cycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Météo"
@@ -37,16 +40,16 @@ extension WeatherViewController: WeatherServiceDelegate {
         self.showAlert(error: error)
     }
 
-
     func didFinish(result: [WeatherStruct]) {
         self.data = result
-
+// to come back from datatask background thread
         DispatchQueue.main.async {
             self.weatherTableView.reloadData()
         }
     }
-
 }
+
+// MARK: - UITableViewCell
 
 class MeteoCell: UITableViewCell {
 

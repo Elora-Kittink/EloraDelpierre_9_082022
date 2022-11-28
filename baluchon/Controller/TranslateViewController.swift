@@ -10,12 +10,22 @@ import UIKit
 class TranslateViewController: UIViewController {
     
     // MARK: - Variables
-    
-    private var translateService: TranslateService!
     private let networkService = NetworkService()
+    private var translateService: TranslateService!
     private var fromLangage: String = "fr"
     private var toLangage: String = "en"
     private var frenchToEnglish: Bool = true
+    
+    // MARK: - Outlets
+    
+    @IBOutlet weak var UpLabel: UILabel!
+    @IBOutlet weak var DownLabel: UILabel!
+    @IBOutlet weak var UpTextView: UITextView!
+    @IBOutlet weak var DownTextView: UITextView!
+    @IBOutlet weak var translateBtn: UIButton!
+    @IBOutlet weak var reverseBtn: UIButton!
+    @IBOutlet weak var spiner: UIActivityIndicatorView!
+    @IBOutlet weak var translateScrollView: UIScrollView!
     
     // MARK: - View life cycle
     
@@ -35,6 +45,7 @@ class TranslateViewController: UIViewController {
         translateBtn.layer.borderWidth = 2
         translateBtn.layer.borderColor = UIColor(named: "number2")?.cgColor
         spiner.hidesWhenStopped = true
+
         self.translateService = TranslateService(delegate: self)
         
         let toolBar = UIToolbar()
@@ -47,21 +58,13 @@ class TranslateViewController: UIViewController {
         UpTextView.inputAccessoryView = toolBar
     }
     
-    @objc
-    func closeKeyboard() {
-        UpTextView.resignFirstResponder()
+// MARK: - Actions
+    
+// close keyboard when tap anywhere outside keyboard
+    @IBAction func didTap() {
+        self.view.endEditing(true)
     }
-    
-    // MARK: - Outlets
-    
-    @IBOutlet weak var UpLabel: UILabel!
-    @IBOutlet weak var DownLabel: UILabel!
-    @IBOutlet weak var UpTextView: UITextView!
-    @IBOutlet weak var DownTextView: UITextView!
-    @IBOutlet weak var translateBtn: UIButton!
-    @IBOutlet weak var reverseBtn: UIButton!
-    @IBOutlet weak var spiner: UIActivityIndicatorView!
-    
+
     @IBAction private func reverseLangage() {
         self.frenchToEnglish.toggle()
         if frenchToEnglish {
@@ -77,7 +80,7 @@ class TranslateViewController: UIViewController {
             toLangage = "fr"
         }
     }
-    
+// prevent pressing multiple times
     @IBAction private func launchTranslation() {
         spiner.startAnimating()
         self.translateBtn.isEnabled = false
@@ -86,10 +89,22 @@ class TranslateViewController: UIViewController {
                                              from: self.fromLangage,
                                              to: self.toLangage, networkService: networkService)
     }
+    
+// MARK: - Methods
+    
+    @objc
+// close keyboard when tap on "valider" button on keyboard
+    func closeKeyboard() {
+        UpTextView.resignFirstResponder()
+    }
+    
 }
+
+// MARK: - TranslateServiceDelegate
 
 extension TranslateViewController: TranslateServiceDelegate {
     func didFinish(result: String) {
+// to come back from datatask background thread
         DispatchQueue.main.async {
             self.DownTextView.text = result
             self.spiner.stopAnimating()
@@ -102,3 +117,5 @@ extension TranslateViewController: TranslateServiceDelegate {
         print("🥹 Error: \(error.localizedDescription)")
     }
 }
+
+

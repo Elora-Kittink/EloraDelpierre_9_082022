@@ -30,13 +30,13 @@ class ExchangeRateService {
         }
         let request = URLRequest(url: apiUrl)
         
-        networkService.launchAPICall(urlRequest: request, expectingReturnType: ExchangeRateStruct.self, completion: { result in
+        networkService.launchAPICall(urlRequest: request, expectingReturnType: ExchangeRateStruct.self, completion: { [weak self] result in
             switch result {
             case .success(let rate):
-                self.rate = rate.result
-                self.delegate.didFinish(result: rate.result, from: from)
+                self?.rate = rate.result
+                self?.delegate.didFinish(result: rate.result, from: from)
             case .failure(let error):
-                self.delegate.didFail(error: error)
+                self?.delegate.didFail(error: error)
             }
         })
     }

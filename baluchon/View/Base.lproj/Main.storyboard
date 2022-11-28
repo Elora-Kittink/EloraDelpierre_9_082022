@@ -64,7 +64,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ko-Jl-kAM">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="4ko-Jl-kAM">
                                 <rect key="frame" x="76" y="0.0" width="262" height="896"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="UJJ-oS-9uz">
@@ -163,6 +163,7 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="UaG-Yu-iIy" firstAttribute="top" secondItem="UJJ-oS-9uz" secondAttribute="top" constant="-100" id="Dth-vH-9jh"/>
                                     <constraint firstItem="UJJ-oS-9uz" firstAttribute="trailing" secondItem="UaG-Yu-iIy" secondAttribute="trailing" id="OtU-o7-Osu"/>
@@ -173,6 +174,9 @@
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="UaG-Yu-iIy"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="B0h-Gg-hS9"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="AaW-qm-fz8" appends="YES" id="1jF-0l-4Ga"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="IQl-Rt-tNW"/>
@@ -196,6 +200,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JXM-9i-DyU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="AaW-qm-fz8">
+                    <connections>
+                        <action selector="didTap" destination="thb-nO-gpw" id="76M-uv-8wI"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1865.217391304348" y="1255.5803571428571"/>
         </scene>
@@ -340,16 +349,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eUZ-Se-9Zy">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="onDrag" translatesAutoresizingMaskIntoConstraints="NO" id="eUZ-Se-9Zy">
                                 <rect key="frame" x="0.0" y="92" width="414" height="721"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="center" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="B2T-uu-q9l">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="529"/>
+                                    <stackView opaque="NO" contentMode="center" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="B2T-uu-q9l" userLabel="Container">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="537"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="BCI-5H-Djp" userLabel="FRStackView">
                                                 <rect key="frame" x="82" y="0.0" width="250" height="172"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Français" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ans-zL-GQU" customClass="UpTextView">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Français" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ans-zL-GQU" customClass="UpTextView">
                                                         <rect key="frame" x="0.0" y="0.0" width="250" height="36"/>
                                                         <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="30"/>
                                                         <color key="textColor" name="number4"/>
@@ -370,7 +379,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k0P-ug-pbC" userLabel="ReverseBtnView">
-                                                <rect key="frame" x="132" y="174" width="150" height="60"/>
+                                                <rect key="frame" x="132" y="176" width="150" height="60"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rYD-uL-uT6">
                                                         <rect key="frame" x="25" y="10" width="100" height="40"/>
@@ -399,13 +408,13 @@
                                                 </constraints>
                                             </view>
                                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="2W3-JT-gtr">
-                                                <rect key="frame" x="188.5" y="236" width="37" height="37"/>
+                                                <rect key="frame" x="188.5" y="240" width="37" height="37"/>
                                                 <color key="color" red="0.71341250099999998" green="0.40962786750000002" blue="0.39762009199999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </activityIndicatorView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7J3-0v-UN2" userLabel="ENStackView">
-                                                <rect key="frame" x="82" y="275" width="250" height="172"/>
+                                                <rect key="frame" x="82" y="281" width="250" height="172"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anglais" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ame-Sn-qUq" customClass="DownTextView">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Anglais" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ame-Sn-qUq" customClass="DownTextView">
                                                         <rect key="frame" x="0.0" y="0.0" width="250" height="36"/>
                                                         <fontDescription key="fontDescription" name="Optima-Regular" family="Optima" pointSize="30"/>
                                                         <color key="textColor" name="number4"/>
@@ -425,7 +434,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mVV-eY-QCT" userLabel="TranslateBtnView">
-                                                <rect key="frame" x="132" y="449" width="150" height="80"/>
+                                                <rect key="frame" x="132" y="457" width="150" height="80"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hn1-5Z-4ZD">
                                                         <rect key="frame" x="25" y="20" width="100" height="40"/>
@@ -460,22 +469,30 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
+                                <keyboardLayoutGuide key="keyboard" id="z5q-7y-ymy"/>
+                                <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="B2T-uu-q9l" secondAttribute="bottom" id="4Pa-27-bnY"/>
-                                    <constraint firstItem="B2T-uu-q9l" firstAttribute="top" secondItem="eUZ-Se-9Zy" secondAttribute="top" id="6A9-jV-WFs"/>
-                                    <constraint firstItem="B2T-uu-q9l" firstAttribute="leading" secondItem="eUZ-Se-9Zy" secondAttribute="leading" id="S4P-bS-C9B"/>
-                                    <constraint firstAttribute="trailing" secondItem="B2T-uu-q9l" secondAttribute="trailing" id="TO4-rW-ucy"/>
-                                    <constraint firstItem="B2T-uu-q9l" firstAttribute="centerX" secondItem="eUZ-Se-9Zy" secondAttribute="centerX" id="dtB-Eh-anh"/>
+                                    <constraint firstItem="B2T-uu-q9l" firstAttribute="bottom" secondItem="yV5-SD-ztg" secondAttribute="bottom" id="4mn-8j-wG9"/>
+                                    <constraint firstItem="B2T-uu-q9l" firstAttribute="width" secondItem="OAW-3g-tdA" secondAttribute="width" id="6KH-gh-mPh"/>
+                                    <constraint firstItem="B2T-uu-q9l" firstAttribute="trailing" secondItem="yV5-SD-ztg" secondAttribute="trailing" id="8Q5-ij-E2I"/>
+                                    <constraint firstItem="B2T-uu-q9l" firstAttribute="bottom" secondItem="z5q-7y-ymy" secondAttribute="top" priority="750" id="9XP-eY-bFN"/>
+                                    <constraint firstItem="B2T-uu-q9l" firstAttribute="top" secondItem="yV5-SD-ztg" secondAttribute="top" id="mmf-Su-V4g"/>
+                                    <constraint firstItem="B2T-uu-q9l" firstAttribute="leading" secondItem="yV5-SD-ztg" secondAttribute="leading" id="uH6-an-meK"/>
                                 </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="yV5-SD-ztg"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="OAW-3g-tdA"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="BnB-ar-KSA" appends="YES" id="tRq-u6-sEG"/>
+                                </connections>
                             </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="srn-8N-9uQ"/>
                         <color key="backgroundColor" name="number1"/>
                         <constraints>
-                            <constraint firstItem="srn-8N-9uQ" firstAttribute="bottom" secondItem="eUZ-Se-9Zy" secondAttribute="bottom" id="55W-j0-r46"/>
-                            <constraint firstItem="eUZ-Se-9Zy" firstAttribute="top" secondItem="srn-8N-9uQ" secondAttribute="top" id="5Tp-Kj-NxS"/>
-                            <constraint firstItem="eUZ-Se-9Zy" firstAttribute="leading" secondItem="srn-8N-9uQ" secondAttribute="leading" id="I6U-fP-gfu"/>
-                            <constraint firstItem="eUZ-Se-9Zy" firstAttribute="trailing" secondItem="srn-8N-9uQ" secondAttribute="trailing" id="Xs0-Or-cZd"/>
+                            <constraint firstItem="eUZ-Se-9Zy" firstAttribute="trailing" secondItem="srn-8N-9uQ" secondAttribute="trailing" id="BhN-eU-Aqe"/>
+                            <constraint firstItem="eUZ-Se-9Zy" firstAttribute="leading" secondItem="srn-8N-9uQ" secondAttribute="leading" id="JTh-pv-yoH"/>
+                            <constraint firstItem="eUZ-Se-9Zy" firstAttribute="top" secondItem="srn-8N-9uQ" secondAttribute="top" id="meT-IU-IMx"/>
+                            <constraint firstItem="eUZ-Se-9Zy" firstAttribute="bottom" secondItem="srn-8N-9uQ" secondAttribute="bottom" id="wGr-57-4L0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="GL0-h8-HBy"/>
@@ -487,9 +504,15 @@
                         <outlet property="reverseBtn" destination="rYD-uL-uT6" id="Wt1-Ap-5we"/>
                         <outlet property="spiner" destination="2W3-JT-gtr" id="dcF-o1-eLu"/>
                         <outlet property="translateBtn" destination="Hn1-5Z-4ZD" id="05A-ms-fIC"/>
+                        <outlet property="translateScrollView" destination="eUZ-Se-9Zy" id="ubA-sG-mhe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8LU-yi-RKo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="BnB-ar-KSA">
+                    <connections>
+                        <action selector="didTap" destination="4Mg-jP-t82" id="Whm-TB-trX"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-975.36231884057975" y="1255.5803571428571"/>
         </scene>

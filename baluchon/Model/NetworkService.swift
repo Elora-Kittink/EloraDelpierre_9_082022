@@ -16,7 +16,7 @@ class NetworkService {
     }
     
     public func launchAPICall<T: Decodable>(urlRequest: URLRequest, expectingReturnType: T.Type, completion: @escaping ((Result<T, Error>) -> Void)) {
-// dispatch queue
+
         let task = session.dataTask(with: urlRequest, completionHandler: { data, _, error in
             guard let data = data , error == nil else {
                 completion(.failure(GlobalError.dataNotFound))

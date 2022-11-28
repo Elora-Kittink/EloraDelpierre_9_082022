@@ -9,6 +9,14 @@ import UIKit
 
 class ExchangeViewController: UIViewController {
     
+    
+    // MARK: - Variables
+    private var exchangeRateService: ExchangeRateService!
+    private var fromCurrency: String = "USD"
+    private var toCurrency: String = "EUR"
+    private var usdToEur: Bool = true
+    private let networkService = NetworkService()
+ 
     // MARK: - Outlets
     @IBOutlet weak var downTextField: UITextField!
     @IBOutlet weak var upTextField: UITextField!
@@ -18,12 +26,6 @@ class ExchangeViewController: UIViewController {
     @IBOutlet weak var launchButton: UIButton!
     @IBOutlet weak var spiner: UIActivityIndicatorView!
     
-    // MARK: - Variables
-    private var exchangeRateService: ExchangeRateService!
-    private var fromCurrency: String = "USD"
-    private var toCurrency: String = "EUR"
-    private var usdToEur: Bool = true
-    private let networkService = NetworkService()
     
     // MARK: - View life cycle
     override func viewDidLoad() {
@@ -58,14 +60,9 @@ class ExchangeViewController: UIViewController {
     
     // MARK: - Actions
     
-    func refresh() {
-        DispatchQueue.main.async {
-            self.downTextField.text = "\(self.exchangeRateService.rate)"
-            self.spiner.stopAnimating()
-            self.launchButton.isEnabled = true
-        }
+    @IBAction func didTap() {
+        self.view.endEditing(true)
     }
-    
     
     @IBAction private func launchExchangeRate() {
         spiner.startAnimating()
@@ -89,11 +86,19 @@ class ExchangeViewController: UIViewController {
         }
     }
     
+// MARK: - Methods
     @objc
     func closeKeyboard() {
         upTextField.resignFirstResponder()
     }
     
+    func refresh() {
+        DispatchQueue.main.async {
+            self.downTextField.text = "\(self.exchangeRateService.rate)"
+            self.spiner.stopAnimating()
+            self.launchButton.isEnabled = true
+        }
+    }
 }
 
 // MARK: - ExchangeRateServiceDelegate
@@ -102,12 +107,6 @@ extension ExchangeViewController: ExchangeRateServiceDelegate {
     func didFinish(result: Float, from: String) {
         print("🥰 \(result)")
         self.refresh()
-//        DispatchQueue.main.async {
-//            self.downTextField.text = "\(result)"
-//            self.spiner.stopAnimating()
-//            self.launchButton.isEnabled = true
-//        }
-        
     }
     
     func didFail(error: Error) {
@@ -132,8 +131,6 @@ extension ExchangeViewController: UITextFieldDelegate {
             textField.text = (textField.text ?? "") + "."
             return false
         }
-        
         return true
     }
 }
-
