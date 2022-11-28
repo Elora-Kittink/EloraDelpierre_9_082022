@@ -32,6 +32,7 @@
 		D5A698B328C5EA1400019E00 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A698B228C5EA1400019E00 /* WeatherService.swift */; };
 		D5A698B528C5EA4300019E00 /* WeatherStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A698B428C5EA4300019E00 /* WeatherStruct.swift */; };
 		D5A698B728C6380D00019E00 /* TranslateStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A698B628C6380D00019E00 /* TranslateStruct.swift */; };
+		D5A7235D292E215B0040DA92 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A7235C292E215B0040DA92 /* UIViewController+Alert.swift */; };
 		D5AAD255292648EC0079CA94 /* NetworkServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A51A41292524D9009AAA96 /* NetworkServiceMock.swift */; };
 		D5AAD257292678F80079CA94 /* NetworkServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAD256292678F80079CA94 /* NetworkServiceTests.swift */; };
 /* End PBXBuildFile section */
@@ -77,6 +78,7 @@
 		D5A698B228C5EA1400019E00 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		D5A698B428C5EA4300019E00 /* WeatherStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherStruct.swift; sourceTree = "<group>"; };
 		D5A698B628C6380D00019E00 /* TranslateStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateStruct.swift; sourceTree = "<group>"; };
+		D5A7235C292E215B0040DA92 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		D5AAD256292678F80079CA94 /* NetworkServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -120,6 +122,7 @@
 		D552906028A3E59E00AAA663 /* baluchon */ = {
 			isa = PBXGroup;
 			children = (
+				D5A7235B292E213A0040DA92 /* Helpers */,
 				D552907828A3E5D900AAA663 /* Model */,
 				D552907728A3E5C600AAA663 /* Supporting Files */,
 				D552907628A3E5C000AAA663 /* Controller */,
@@ -239,6 +242,14 @@
 			path = baluchonTests;
 			sourceTree = "<group>";
 		};
+		D5A7235B292E213A0040DA92 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				D5A7235C292E215B0040DA92 /* UIViewController+Alert.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -350,6 +361,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5A7235D292E215B0040DA92 /* UIViewController+Alert.swift in Sources */,
 				D5A698B528C5EA4300019E00 /* WeatherStruct.swift in Sources */,
 				D5A698B728C6380D00019E00 /* TranslateStruct.swift in Sources */,
 				D59A749F28BF9C14004F9F8E /* TranslateService.swift in Sources */,

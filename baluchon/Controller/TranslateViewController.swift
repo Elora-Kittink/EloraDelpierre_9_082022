@@ -21,6 +21,19 @@ class TranslateViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Traduction"
+        UpTextView.layer.cornerRadius = 10
+        UpTextView.layer.borderColor = UIColor(named: "number4")?.cgColor
+        UpTextView.layer.borderWidth = 2
+        DownTextView.layer.cornerRadius = 10
+        DownTextView.layer.borderColor = UIColor(named: "number4")?.cgColor
+        DownTextView.layer.borderWidth = 2
+        reverseBtn.layer.cornerRadius = 5
+        reverseBtn.layer.borderColor = UIColor(named: "number2")?.cgColor
+        reverseBtn.layer.borderWidth = 2
+        translateBtn.layer.cornerRadius = 5
+        translateBtn.layer.borderWidth = 2
+        translateBtn.layer.borderColor = UIColor(named: "number2")?.cgColor
         spiner.hidesWhenStopped = true
         self.translateService = TranslateService(delegate: self)
         
@@ -85,6 +98,7 @@ extension TranslateViewController: TranslateServiceDelegate {
     }
     
     func didFail(error: Error) {
+        self.showAlert(error: error)
         print("🥹 Error: \(error.localizedDescription)")
     }
 }

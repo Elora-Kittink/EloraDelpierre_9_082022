@@ -28,6 +28,19 @@ class ExchangeViewController: UIViewController {
     // MARK: - View life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Taux de change"
+        toggleButton.layer.cornerRadius = 5
+        launchButton.layer.cornerRadius = 5
+        launchButton.layer.borderColor = UIColor(named: "number2")?.cgColor
+        launchButton.layer.borderWidth = 2
+        downTextField.layer.borderColor = UIColor(named: "number4")?.cgColor
+        downTextField.layer.borderWidth = 2
+        downTextField.layer.cornerRadius = 5
+        upTextField.layer.borderWidth = 2
+        upTextField.layer.borderColor = UIColor(named: "number4")?.cgColor
+        upTextField.layer.cornerRadius = 5
+        toggleButton.layer.borderWidth = 2
+        toggleButton.layer.borderColor = UIColor(named: "number2")?.cgColor
         spiner.hidesWhenStopped = true
         self.exchangeRateService = ExchangeRateService(delegate: self)
         
@@ -45,15 +58,19 @@ class ExchangeViewController: UIViewController {
     
     // MARK: - Actions
     
+    func refresh() {
+        DispatchQueue.main.async {
+            self.downTextField.text = "\(self.exchangeRateService.rate)"
+            self.spiner.stopAnimating()
+            self.launchButton.isEnabled = true
+        }
+    }
+    
     
     @IBAction private func launchExchangeRate() {
         spiner.startAnimating()
         launchButton.isEnabled = false
-        //        self.exchangeRateService.fetchExchangeRate(amount: upTextField.text,
-        //                                       from: fromCurrency,
-        //                                                   to: toCurrency)
-//        MARK: -   VIRER CETTE LOGIQUE DE LA VUE, utiliser le delegate?
-    
+        
         self.exchangeRateService.fetchExangeRate(amount: upTextField.text, from: fromCurrency, to: toCurrency, networkService: networkService)
     }
     
@@ -84,17 +101,18 @@ extension ExchangeViewController: ExchangeRateServiceDelegate {
     
     func didFinish(result: Float, from: String) {
         print("🥰 \(result)")
-        
-        DispatchQueue.main.async {
-            self.downTextField.text = "\(result)"
-            self.spiner.stopAnimating()
-            self.launchButton.isEnabled = true
-        }
+        self.refresh()
+//        DispatchQueue.main.async {
+//            self.downTextField.text = "\(result)"
+//            self.spiner.stopAnimating()
+//            self.launchButton.isEnabled = true
+//        }
         
     }
     
     func didFail(error: Error) {
         print("🥹 Error: \(error.localizedDescription)")
+        self.showAlert(error: error)
     }
 }
 

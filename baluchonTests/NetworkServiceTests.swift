@@ -36,8 +36,7 @@ final class NetworkServiceTests: XCTestCase {
     }
     
     func testNoData() {
-//        je sais pas si ça merde a cause du data: nil ou du URL foireux
-//        data = nil pas pareil de que data = ""
+        
         let response = HTTPURLResponse(url: URL(string: "TestUrl")!, statusCode: 200, httpVersion: nil, headerFields: nil)
 
         let mockSession2 = MockURLSession(completionHandler: (nil, response, nil))

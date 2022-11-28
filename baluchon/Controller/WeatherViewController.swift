@@ -19,12 +19,13 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        title = "Météo"
         self.weatherService = WeatherService(delegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.weatherService.fetchForCities(cities: ["Paris", "New York", "Berlin", "La Rochelle"], networkService: networkService)
+        self.weatherService.fetchForCities(cities: ["Paris", "New York"], networkService: networkService)
     }
 }
 
@@ -33,6 +34,7 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: WeatherServiceDelegate {
     func didFail(error: Error) {
         print("☠️ error type : \(error)")
+        self.showAlert(error: error)
     }
 
 

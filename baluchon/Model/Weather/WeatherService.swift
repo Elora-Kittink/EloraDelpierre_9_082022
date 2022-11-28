@@ -43,17 +43,19 @@ class WeatherService {
                 if resultArray.count == cities.count {
                     let realResult = resultArray.compactMap { data in
                         return data
-                    }
+                }
                     self.delegate.didFinish(result: realResult)
                 }
             }
         }
     }
     
-    //    (WeatherStruct?, Error?)
+
     private func fetchOneCity(forCity: String, networkService: NetworkService, completion: @escaping (Result<WeatherStruct, Error>) -> Void) {
         
-        let apiUrl = createUrl(forCity: forCity)
+        guard let apiUrl = createUrl(forCity: forCity) else {
+            return
+        }
         let request = URLRequest(url: apiUrl)
         
         networkService.launchAPICall(urlRequest: request, expectingReturnType: WeatherStruct.self, completion: { result in
@@ -67,24 +69,24 @@ class WeatherService {
         })
     }
     
-    func createUrl(forCity: String) -> URL{
+    func createUrl(forCity: String) -> URL? {
         
         guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "Weather_API_KEY") as? String else {
             
             self.delegate.didFail(error: GlobalError.apiKeyNotFound)
-            return URL(string: "fail")!
+            return nil
         }
         //      in order to accept cities whith white space in name
         guard let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         else {
             
             self.delegate.didFail(error: GlobalError.incorrecInputEntries)
-            return URL(string: "fail")!
+            return nil
         }
         
         guard  let apiUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric&q=\(city)") else {
             self.delegate.didFail(error: GlobalError.urlApiNotCreated)
-            return URL(string: "fail")!
+            return nil
         }
         return apiUrl
     }

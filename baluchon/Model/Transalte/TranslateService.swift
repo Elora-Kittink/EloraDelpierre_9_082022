@@ -31,12 +31,12 @@ class TranslateService {
         }
         let request = URLRequest(url: apiUrl)
 
-        networkService.launchAPICall(urlRequest: request, expectingReturnType: TranslateStruct.self, completion: { result in
+        networkService.launchAPICall(urlRequest: request, expectingReturnType: TranslateStruct.self, completion: { [weak self] result in
             switch result {
             case .success(let translatedText):
-                self.delegate.didFinish(result: translatedText.data.translations[0].translatedText)
+                self?.delegate.didFinish(result: translatedText.data.translations[0].translatedText)
             case .failure(let error):
-                self.delegate.didFail(error: error)
+                self?.delegate.didFail(error: error)
             }
         })
     }

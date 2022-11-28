@@ -17,6 +17,7 @@ protocol ExchangeRateServiceDelegate: AnyObject {
 class ExchangeRateService {
     
     weak var delegate: ExchangeRateServiceDelegate!
+    var rate: Float = 0
     
     init(delegate: ExchangeRateServiceDelegate) {
         self.delegate = delegate
@@ -32,6 +33,7 @@ class ExchangeRateService {
         networkService.launchAPICall(urlRequest: request, expectingReturnType: ExchangeRateStruct.self, completion: { result in
             switch result {
             case .success(let rate):
+                self.rate = rate.result
                 self.delegate.didFinish(result: rate.result, from: from)
             case .failure(let error):
                 self.delegate.didFail(error: error)
