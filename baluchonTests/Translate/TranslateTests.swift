@@ -12,7 +12,7 @@ final class TranslateServiceTests: XCTestCase, TranslateServiceDelegate {
     
     var error: GlobalError?
     
-    func didFinish(result: String) { }
+    func didFinish() { }
     
     func didFail(error: Error) { self.error = error as? GlobalError }
     

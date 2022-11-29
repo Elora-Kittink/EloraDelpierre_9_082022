@@ -10,14 +10,14 @@ import UIKit
 
 protocol ExchangeRateServiceDelegate: AnyObject {
     
-    func didFinish(result: Float, from: String)
+    func didFinish()
     func didFail(error: Error)
 }
 
 class ExchangeRateService {
     
     weak var delegate: ExchangeRateServiceDelegate!
-    var rate: Float = 0
+    var rateResult: Float = 0
     
     init(delegate: ExchangeRateServiceDelegate) {
         self.delegate = delegate
@@ -33,8 +33,9 @@ class ExchangeRateService {
         networkService.launchAPICall(urlRequest: request, expectingReturnType: ExchangeRateStruct.self, completion: { [weak self] result in
             switch result {
             case .success(let rate):
-                self?.rate = rate.result
-                self?.delegate.didFinish(result: rate.result, from: from)
+                self?.rateResult = rate.result
+                self?.delegate.didFinish()
+                print(self?.rateResult)
             case .failure(let error):
                 self?.delegate.didFail(error: error)
             }

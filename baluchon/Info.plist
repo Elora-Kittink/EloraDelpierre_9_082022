@@ -2,12 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Translate_API_KEY</key>
-	<string>$(Translate_API_KEY)</string>
-	<key>Weather_API_KEY</key>
-	<string>$(Weather_API_KEY)</string>
 	<key>Exchange_Rate_API_KEY</key>
 	<string>$(Exchange_Rate_API_KEY)</string>
+	<key>Translate_API_KEY</key>
+	<string>$(Translate_API_KEY)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -27,5 +25,7 @@
 			</array>
 		</dict>
 	</dict>
+	<key>Weather_API_KEY</key>
+	<string>$(Weather_API_KEY)</string>
 </dict>
 </plist>

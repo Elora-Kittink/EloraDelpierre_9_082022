@@ -11,7 +11,7 @@ import XCTest
 
 class ExchangeTests: XCTestCase, ExchangeRateServiceDelegate {
     var error: GlobalError?
-    func didFinish(result: Float, from: String) { }
+    func didFinish() { }
     
     func didFail(error: Error) {
         self.error = error as? GlobalError

@@ -13,9 +13,8 @@ class WeatherTests: XCTestCase, WeatherServiceDelegate {
     
     var error: GlobalError?
     var resultArray: [WeatherStruct] = []
-    func didFinish(result: [WeatherStruct]) {
-        print("🤡 \(result)")
-        resultArray.append(result[0])
+    func didFinish() {
+        
     }
     
     func didFail(error: Error) {
@@ -23,7 +22,7 @@ class WeatherTests: XCTestCase, WeatherServiceDelegate {
     }
     
     func testUrlSucces() {
-        let weatherService = WeatherService(delegate: self)
+       let weatherService = WeatherService(delegate: self)
        let url = weatherService.createUrl(forCity: "Paris")
         XCTAssertEqual(url, URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=6549c66045e304a584b58f52e94acf59&units=metric&q=Paris"))
     }

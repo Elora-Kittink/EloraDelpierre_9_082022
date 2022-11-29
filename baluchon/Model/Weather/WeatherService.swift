@@ -12,7 +12,7 @@ import Foundation
 
 protocol WeatherServiceDelegate: AnyObject {
     
-    func didFinish(result: [WeatherStruct])
+    func didFinish()
     func didFail(error: Error)
 }
 
@@ -21,6 +21,7 @@ protocol WeatherServiceDelegate: AnyObject {
 class WeatherService {
     
     private weak var delegate: WeatherServiceDelegate!
+    var weather: [WeatherStruct] = []
     
     init(delegate: WeatherServiceDelegate) {
         self.delegate = delegate
@@ -32,19 +33,20 @@ class WeatherService {
         var resultArray: [WeatherStruct?] = []
         
         cities.forEach { city in
-            self.fetchOneCity(forCity: city, networkService: networkService) { result in
+            self.fetchOneCity(forCity: city, networkService: networkService) { [weak self] result in
                 switch result {
                 case .success(let result):
                     resultArray.append(result)
                 case .failure(let error):
-                    self.delegate.didFail(error: error)
+                    self?.delegate.didFail(error: error)
                 }
                 //                compactMap throw aways nil results
                 if resultArray.count == cities.count {
                     let realResult = resultArray.compactMap { data in
                         return data
                 }
-                    self.delegate.didFinish(result: realResult)
+                    self?.weather = realResult
+                    self?.delegate.didFinish()
                 }
             }
         }
@@ -70,20 +72,21 @@ class WeatherService {
     }
     
     func createUrl(forCity: String) -> URL? {
-        
+// not testable
         guard let apiKey = Bundle.main.object(forInfoDictionaryKey: "Weather_API_KEY") as? String else {
             
             self.delegate.didFail(error: GlobalError.apiKeyNotFound)
             return nil
         }
-        //      in order to accept cities whith white space in name
+// in order to accept cities whith white space in name
+// not testable
         guard let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         else {
             
             self.delegate.didFail(error: GlobalError.incorrecInputEntries)
             return nil
         }
-        
+// not testable
         guard  let apiUrl = URL(string: "https://api.openweathermap.org/data/2.5/weather?appid=\(apiKey)&units=metric&q=\(city)") else {
             self.delegate.didFail(error: GlobalError.urlApiNotCreated)
             return nil

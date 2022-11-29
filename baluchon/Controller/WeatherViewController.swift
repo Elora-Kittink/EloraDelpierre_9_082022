@@ -40,8 +40,8 @@ extension WeatherViewController: WeatherServiceDelegate {
         self.showAlert(error: error)
     }
 
-    func didFinish(result: [WeatherStruct]) {
-        self.data = result
+    func didFinish() {
+        self.data = self.weatherService.weather
 // to come back from datatask background thread
         DispatchQueue.main.async {
             self.weatherTableView.reloadData()
@@ -82,5 +82,11 @@ extension WeatherViewController: UITableViewDataSource {
                        city: "\(cityModel.name)")
         
         return cell
+    }
+}
+
+extension WeatherViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return min(200, tableView.frame.height / 3)
     }
 }

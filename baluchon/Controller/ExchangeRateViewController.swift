@@ -94,7 +94,7 @@ class ExchangeViewController: UIViewController {
     
     func refresh() {
         DispatchQueue.main.async {
-            self.downTextField.text = "\(self.exchangeRateService.rate)"
+            self.downTextField.text = "\(self.exchangeRateService.rateResult)"
             self.spiner.stopAnimating()
             self.launchButton.isEnabled = true
         }
@@ -104,8 +104,7 @@ class ExchangeViewController: UIViewController {
 // MARK: - ExchangeRateServiceDelegate
 extension ExchangeViewController: ExchangeRateServiceDelegate {
     
-    func didFinish(result: Float, from: String) {
-        print("🥰 \(result)")
+    func didFinish() {
         self.refresh()
     }
     

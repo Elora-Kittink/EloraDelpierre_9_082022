@@ -8,14 +8,14 @@
 import Foundation
 
 protocol TranslateServiceDelegate: AnyObject {
-    func didFinish(result: String)
+    func didFinish()
     func didFail(error: Error)
 }
 
 class TranslateService {
     
     weak var delegate: TranslateServiceDelegate!
-//    static let shared = TranslateService(delegate: delegate)
+    var translatedQuote: String = ""
     
     init(delegate: TranslateServiceDelegate) {
         self.delegate = delegate
@@ -34,7 +34,8 @@ class TranslateService {
         networkService.launchAPICall(urlRequest: request, expectingReturnType: TranslateStruct.self, completion: { [weak self] result in
             switch result {
             case .success(let translatedText):
-                self?.delegate.didFinish(result: translatedText.data.translations[0].translatedText)
+                self?.translatedQuote = translatedText.data.translations[0].translatedText
+                self?.delegate.didFinish()
             case .failure(let error):
                 self?.delegate.didFail(error: error)
             }

@@ -103,10 +103,9 @@ class TranslateViewController: UIViewController {
 // MARK: - TranslateServiceDelegate
 
 extension TranslateViewController: TranslateServiceDelegate {
-    func didFinish(result: String) {
-// to come back from datatask background thread
+    func didFinish() {
         DispatchQueue.main.async {
-            self.DownTextView.text = result
+            self.DownTextView.text = "\(self.translateService.translatedQuote)"
             self.spiner.stopAnimating()
             self.translateBtn.isEnabled = true
         }
