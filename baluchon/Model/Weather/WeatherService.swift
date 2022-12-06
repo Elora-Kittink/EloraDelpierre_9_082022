@@ -3,8 +3,7 @@
 //  baluchon
 //
 //  Created by Elora on 05/09/2022.
-//https://apilayer.com/marketplace/fixer-api#details-tab
-//https://apilayer.com/marketplace/fixer-api
+
 
 import Foundation
 
@@ -27,11 +26,12 @@ class WeatherService {
         self.delegate = delegate
     }
     
-    //    function taking all the cities and then pass them one by one for the fetch
+//    function taking all the cities and then pass them one by one for the fetch
     
     func fetchForCities(cities: [String], networkService: NetworkService) {
         var resultArray: [WeatherStruct?] = []
         
+// weak self pour eviter les fuites memoire
         cities.forEach { city in
             self.fetchOneCity(forCity: city, networkService: networkService) { [weak self] result in
                 switch result {
@@ -40,7 +40,7 @@ class WeatherService {
                 case .failure(let error):
                     self?.delegate.didFail(error: error)
                 }
-                //                compactMap throw aways nil results
+//                compactMap throw aways nil results
                 if resultArray.count == cities.count {
                     let realResult = resultArray.compactMap { data in
                         return data
@@ -78,7 +78,7 @@ class WeatherService {
             self.delegate.didFail(error: GlobalError.apiKeyNotFound)
             return nil
         }
-// in order to accept cities whith white space in name
+// allow any type of character
 // not testable
         guard let city = forCity.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
         else {

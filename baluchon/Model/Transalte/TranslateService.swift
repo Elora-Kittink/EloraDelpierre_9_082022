@@ -7,15 +7,19 @@
 
 import Foundation
 
+// MARK: - Protocol
+
 protocol TranslateServiceDelegate: AnyObject {
     func didFinish()
     func didFail(error: Error)
 }
 
+// MARK: CLASS
+
 class TranslateService {
     
     weak var delegate: TranslateServiceDelegate!
-    var translatedQuote: String = ""
+    var translatedQuote: [String] = []
     
     init(delegate: TranslateServiceDelegate) {
         self.delegate = delegate
@@ -25,16 +29,19 @@ class TranslateService {
     func gettranslation(for queryText: String,
                         from source: String,
                         to target: String, format: String = "text", networkService: NetworkService) {
-
+        
+// empty result array from last translation
+        translatedQuote = []
         guard let apiUrl = createApiUrl(queryText: queryText, source: source, target: target) else {
             return
         }
         let request = URLRequest(url: apiUrl)
-
+        
+// weak self pour eviter les fuites memoire
         networkService.launchAPICall(urlRequest: request, expectingReturnType: TranslateStruct.self, completion: { [weak self] result in
             switch result {
             case .success(let translatedText):
-                self?.translatedQuote = translatedText.data.translations[0].translatedText
+                self?.translatedQuote.append(translatedText.data.translations[0].translatedText)
                 self?.delegate.didFinish()
             case .failure(let error):
                 self?.delegate.didFail(error: error)
@@ -42,6 +49,7 @@ class TranslateService {
         })
     }
 
+// return URL in order to test
     func createApiUrl(queryText: String,
                       source: String,
                        target: String) -> URL? {
@@ -51,9 +59,8 @@ class TranslateService {
             self.delegate.didFail(error: GlobalError.apiKeyNotFound)
             return nil
         }
-
+// allow any type of character
         guard let queryTextPercent = queryText.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else {
-//            on fait quoi ici si ça foire?
             self.delegate.didFail(error: GlobalError.incorrecInputEntries)
             return nil
         }

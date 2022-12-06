@@ -60,16 +60,18 @@ class ExchangeViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func didTap() {
+//    dissmiss keyboard when tap out
+    @IBAction func dissmissKeyboard() {
         self.view.endEditing(true)
     }
-    
+
     @IBAction private func launchExchangeRate() {
         spiner.startAnimating()
         launchButton.isEnabled = false
         
         self.exchangeRateService.fetchExangeRate(amount: upTextField.text, from: fromCurrency, to: toCurrency, networkService: networkService)
     }
+    
     
     @IBAction private func toggleCurrency() {
         self.usdToEur.toggle()
@@ -94,13 +96,13 @@ class ExchangeViewController: UIViewController {
     
     func refresh() {
         DispatchQueue.main.async {
-            self.downTextField.text = "\(self.exchangeRateService.rateResult)"
+            self.downTextField.text = "\(self.exchangeRateService.rateResult[0])"
             self.spiner.stopAnimating()
             self.launchButton.isEnabled = true
         }
     }
 }
-
+ 
 // MARK: - ExchangeRateServiceDelegate
 extension ExchangeViewController: ExchangeRateServiceDelegate {
     

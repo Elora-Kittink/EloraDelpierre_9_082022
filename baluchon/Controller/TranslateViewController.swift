@@ -105,7 +105,7 @@ class TranslateViewController: UIViewController {
 extension TranslateViewController: TranslateServiceDelegate {
     func didFinish() {
         DispatchQueue.main.async {
-            self.DownTextView.text = "\(self.translateService.translatedQuote)"
+            self.DownTextView.text = self.translateService.translatedQuote[0]
             self.spiner.stopAnimating()
             self.translateBtn.isEnabled = true
         }

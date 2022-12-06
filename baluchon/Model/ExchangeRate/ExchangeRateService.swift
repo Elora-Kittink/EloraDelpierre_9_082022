@@ -8,16 +8,20 @@
 import Foundation
 import UIKit
 
+// MARK: - Protocol
+
 protocol ExchangeRateServiceDelegate: AnyObject {
     
     func didFinish()
     func didFail(error: Error)
 }
 
+// MARK: CLASS
+
 class ExchangeRateService {
     
     weak var delegate: ExchangeRateServiceDelegate!
-    var rateResult: Float = 0
+    var rateResult: [Float] = []
     
     init(delegate: ExchangeRateServiceDelegate) {
         self.delegate = delegate
@@ -25,17 +29,19 @@ class ExchangeRateService {
     
     func fetchExangeRate(amount: String?, from: String, to: String, networkService: NetworkService) {
         
+// empty result array from previous exchange
+        rateResult = []
         guard let apiUrl = createUrl(amount: amount, from: from, to: to) else {
             return
         }
         let request = URLRequest(url: apiUrl)
         
+// weak self pour eviter les fuites memoire
         networkService.launchAPICall(urlRequest: request, expectingReturnType: ExchangeRateStruct.self, completion: { [weak self] result in
             switch result {
             case .success(let rate):
-                self?.rateResult = rate.result
+                self?.rateResult.append(rate.result)
                 self?.delegate.didFinish()
-                print(self?.rateResult)
             case .failure(let error):
                 self?.delegate.didFail(error: error)
             }
