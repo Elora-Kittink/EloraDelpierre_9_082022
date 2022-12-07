@@ -3,7 +3,7 @@
 //  baluchon
 //
 //  Created by Elora on 31/08/2022.
-//
+// _url    NSURL    "https://translation.googleapis.com/language/translate/v2?key=AIzaSyBvSyMDb8OQO5su-AImC2WzclGPsyNKKYI&format=text&q=Bonjour%20&target=en&source=fr"    0x0000600003751280
 
 import Foundation
 

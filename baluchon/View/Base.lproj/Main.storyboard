@@ -202,7 +202,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JXM-9i-DyU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="AaW-qm-fz8">
                     <connections>
-                        <action selector="didTap" destination="thb-nO-gpw" id="76M-uv-8wI"/>
+                        <action selector="dissmissKeyboard" destination="thb-nO-gpw" id="Baw-EZ-aDE"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>

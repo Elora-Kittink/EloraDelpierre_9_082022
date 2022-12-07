@@ -112,8 +112,10 @@ extension TranslateViewController: TranslateServiceDelegate {
     }
     
     func didFail(error: Error) {
-        self.showAlert(error: error)
         print("🥹 Error: \(error.localizedDescription)")
+        DispatchQueue.main.async {
+            self.showAlert(error: error)
+        }
     }
 }
 
