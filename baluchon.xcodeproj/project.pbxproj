@@ -102,6 +102,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D54513812940A80E00E6848B /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				D598515F28F8401300E03417 /* NetworkService.swift */,
+				D5A51A41292524D9009AAA96 /* NetworkServiceMock.swift */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
 		D552905528A3E59E00AAA663 = {
 			isa = PBXGroup;
 			children = (
@@ -166,12 +175,10 @@
 		D552907828A3E5D900AAA663 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D54513812940A80E00E6848B /* NetworkService */,
 				D573EC352912C77F00421D0B /* Weather */,
 				D573EC342912C76E00421D0B /* Transalte */,
 				D573EC332912C75400421D0B /* ExchangeRate */,
-				D598515F28F8401300E03417 /* NetworkService.swift */,
-				D5A51A41292524D9009AAA96 /* NetworkServiceMock.swift */,
-				D5A4EF9928F9665F007D066D /* Errors.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -248,6 +255,7 @@
 		D5A7235B292E213A0040DA92 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				D5A4EF9928F9665F007D066D /* Errors.swift */,
 				D5A7235C292E215B0040DA92 /* UIViewController+Alert.swift */,
 			);
 			path = Helpers;

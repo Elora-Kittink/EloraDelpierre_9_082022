@@ -75,7 +75,6 @@ class TranslateViewController: UIViewController {
         } else {
             UpLabel.text = "Anglais"
             DownLabel.text = "Français"
-            
             fromLangage = "en"
             toLangage = "fr"
         }
@@ -112,7 +111,6 @@ extension TranslateViewController: TranslateServiceDelegate {
     }
     
     func didFail(error: Error) {
-        print("🥹 Error: \(error.localizedDescription)")
         DispatchQueue.main.async {
             self.showAlert(error: error)
         }

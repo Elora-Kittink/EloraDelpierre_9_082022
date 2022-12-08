@@ -37,7 +37,9 @@ class WeatherViewController: UIViewController {
 extension WeatherViewController: WeatherServiceDelegate {
     func didFail(error: Error) {
         print("☠️ error type : \(error)")
-        self.showAlert(error: error)
+        DispatchQueue.main.async {
+            self.showAlert(error: error)
+        }
     }
 
     func didFinish() {

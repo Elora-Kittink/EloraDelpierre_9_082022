@@ -112,7 +112,9 @@ extension ExchangeViewController: ExchangeRateServiceDelegate {
     
     func didFail(error: Error) {
         print("🥹 Error: \(error.localizedDescription)")
-        self.showAlert(error: error)
+        DispatchQueue.main.async {
+            self.showAlert(error: error)
+        }
     }
 }
 
