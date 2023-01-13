@@ -113,6 +113,8 @@ extension ExchangeViewController: ExchangeRateServiceDelegate {
     func didFail(error: Error) {
         print("🥹 Error: \(error.localizedDescription)")
         DispatchQueue.main.async {
+            self.spiner.stopAnimating()
+            self.launchButton.isEnabled = true
             self.showAlert(error: error)
         }
     }

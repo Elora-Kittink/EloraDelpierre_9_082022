@@ -10,7 +10,6 @@ import Foundation
 // MARK: - DataTask
 
 protocol URLSessionDataTaskProtocol {
-    
     func resume()
 }
 
@@ -18,7 +17,6 @@ extension URLSessionDataTask : URLSessionDataTaskProtocol {}
 
 // doit se conformer au protocol URLSessionDataTaskProtocol
 class MockURLSessionDataTask: URLSessionDataTaskProtocol {
-
     func resume() {}
 }
 
@@ -36,6 +34,8 @@ extension URLSession: URLSessionProtocol {
         return (dataTask(with: url, completionHandler: completionHandler) as URLSessionDataTask) as URLSessionDataTaskProtocol
     }
 }
+
+// MARK: - MOCK
 
 // doit se conformer au protocol 
 class MockURLSession: URLSessionProtocol {

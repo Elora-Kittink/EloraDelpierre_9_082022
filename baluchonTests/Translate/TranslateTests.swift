@@ -53,7 +53,7 @@ final class TranslateServiceTests: XCTestCase, TranslateServiceDelegate {
     func testUrlSucces() {
         let translateService = TranslateService(delegate: self)
         let urlTest = translateService.createApiUrl(queryText: "Test unitaire numéro 2", source: "fr", target: "en")
-        XCTAssertEqual(urlTest, URL(string: "https://translation.googleapis.com/language/translate/v2?key=AIzaSyBvSyMDb8OQO5su-AImC2WzclGPsyNKKYI&format=text&q=Test%20unitaire%20num%C3%A9ro%202&target=en&source=fr"))
+        XCTAssertEqual(urlTest, URL(string: "https://translation.googleapis.com/language/translate/v2?key=AIzaSyDxRxoguc-KXCtKrtGdz9ih3N1tMT8A9k8&format=text&q=Test%20unitaire%20num%C3%A9ro%202&target=en&source=fr"))
     }
     
     func testTranslateSuccess() {

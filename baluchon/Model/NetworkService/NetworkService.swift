@@ -11,6 +11,8 @@ class NetworkService {
 // session conforme au protocol où DataTask renvoie un URLSessionDataTaskProtocol
     private var session: URLSessionProtocol
 
+    
+    // par default utilise le vrai URLSession mais peut etre modifié en injectant le mock en init
     init(session: URLSessionProtocol = URLSession.shared) {
         self.session = session
     }

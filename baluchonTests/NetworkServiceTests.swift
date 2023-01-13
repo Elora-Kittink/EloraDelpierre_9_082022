@@ -8,7 +8,7 @@ import XCTest
 @testable import baluchon
 
 final class NetworkServiceTests: XCTestCase {
-
+//  transforme mes fichiers de test json en type Data
     private func readLocalFile(forRessource: String) -> Data? {
             guard
 //        bien penser à cocher la case "baluchonTests" dans la Target Membership et ne pas mettre Bundle.Main qui est le bundle de baluchon
@@ -18,7 +18,6 @@ final class NetworkServiceTests: XCTestCase {
                       ofType: "json"),
                 let jsonData = try? String(contentsOfFile: bundlePath).data(using: .utf8)
             else {
-                print("🤡")
                 return nil
             }
             return jsonData
@@ -65,18 +64,4 @@ final class NetworkServiceTests: XCTestCase {
             }
         }
     }
-    
-//    func testDecodingSucces() {
-//        let mockSession = createMockSession(fromJsonFile: "TranslateOperationalJson",
-//                andStatusCode: 200, andError: nil)
-//        let sut = NetworkService(session: mockSession!)
-//        sut.launchAPICall(urlRequest: URLRequest(url: URL(string: "test")!), expectingReturnType: TranslateStruct.self) { result in
-//            switch result {
-//            case .success(_):
-//                break
-//            case .failure(let error):
-//                XCTAssertTrue(error is DecodingError)
-//            }
-//        }
-//    }
 }
