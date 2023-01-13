@@ -111,9 +111,9 @@ extension TranslateViewController: TranslateServiceDelegate {
     }
     
     func didFail(error: Error) {
-        self.spiner.stopAnimating()
-        self.translateBtn.isEnabled = true
         DispatchQueue.main.async {
+            self.spiner.stopAnimating()
+            self.translateBtn.isEnabled = true
             self.showAlert(error: error)
         }
     }
